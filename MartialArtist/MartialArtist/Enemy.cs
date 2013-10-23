@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MartialArtist
 {
-    class Enemy:Animation
+    class Enemy
     {
 
         #region Field
@@ -100,7 +100,7 @@ namespace MartialArtist
         #region Constructor
 
         public Enemy()
-            : base()
+           
         { }
 
 
