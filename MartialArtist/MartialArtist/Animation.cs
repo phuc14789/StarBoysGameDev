@@ -46,6 +46,10 @@ namespace MartialArtist
         private Rectangle _rect_sourceRectangle;
         private Rectangle _rect_destinationRectangle;
 
+        //Speed of frame
+        private float _f_elapse;
+        private float _f_delay = 50f;
+
         //public 7 bien tu 1 den 7
         public SpriteBatch SpriteBatch
         {
@@ -105,13 +109,22 @@ namespace MartialArtist
         ///khai bao ham Update
         public void Update(GameTime gameTime)
         {
-            _i_currentFrame++;
-            if (_i_currentFrame == _i_totalFrame)
-                _i_currentFrame = 0;
+            //Moving frame of character
+            _f_elapse += (float)gameTime.ElapsedGameTime.Milliseconds;
+            if (_f_elapse >= _f_delay)
+            {
+                if (_i_currentFrame >= _i_totalFrame)
+                    _i_currentFrame = 0;
+                else
+                    _i_currentFrame++;
+                _f_elapse = 0;
+            }
 
+            //Calculate current frame
             int row = (int)((float)_i_currentFrame / (float)I_Columns);
             int column = _i_currentFrame % _i_Columns;
 
+            //Update frame
             _rect_sourceRectangle = new Rectangle(_i_width * column, _i_heigth * row, _i_width, _i_heigth);
             _rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _i_width, _i_heigth);
         }
@@ -119,9 +132,7 @@ namespace MartialArtist
         ///khai bao ham Draw
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             spriteBatch.Draw(_t_Image, _rect_destinationRectangle, _rect_sourceRectangle, Color.White);
-            spriteBatch.End();
         }
     }
 }
