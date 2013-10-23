@@ -11,12 +11,13 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MartialArtist
 {
-    public class MainGame : Microsoft.Xna.Framework.Game
+    public class MainGame : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        MainMenu mainMenu;
 
-        //Current gameState, begin with Main Menu
+        //Begin gameState, begin with Main Menu
         GameState currentGameMenu = GameState.MainMenu;
 
         //States for game
@@ -35,7 +36,7 @@ namespace MartialArtist
 
             //Screen size
             graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferHeight = 480;
 
             //Add Mouse
             IsMouseVisible = true;
@@ -43,13 +44,15 @@ namespace MartialArtist
 
         protected override void Initialize()
         {
+            //Create MainMenu Object
+            mainMenu = new MainMenu();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            mainMenu.LoadContent(Content);
         }
 
         protected override void UnloadContent()
@@ -58,15 +61,46 @@ namespace MartialArtist
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            switch (currentGameMenu)
+            {
+                //MainMenu State
+                case GameState.MainMenu:
+                    break;
+
+                //Playing State
+                case GameState.Playing:
+                    break;
+
+                //Exit State
+                case GameState.Exit:
+                    this.Exit();
+                    break;
+            }
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
+            switch (currentGameMenu)
+            {
+                //MainMenu State
+                case GameState.MainMenu:
+                    //Draw Main Menu
+                    mainMenu.Draw(spriteBatch);
+                    break;
+
+                //Playing State
+                case GameState.Playing:
+                    break;
+
+                //Exit State
+                case GameState.Exit:
+                    break;
+            }
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
