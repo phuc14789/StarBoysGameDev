@@ -16,10 +16,29 @@ namespace MartialArtist
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Current gameState, begin with Main Menu
+        GameState currentGameMenu = GameState.MainMenu;
+
+        //States for game
+        enum GameState
+        {
+            MainMenu,
+            Playing,
+            GameOver,
+            Exit,
+        }
+
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            //Screen size
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
+
+            //Add Mouse
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
