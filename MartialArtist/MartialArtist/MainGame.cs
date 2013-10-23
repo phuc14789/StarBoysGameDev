@@ -21,15 +21,18 @@ namespace MartialArtist
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
+
         protected override void Initialize()
         {
             base.Initialize();
         }
+
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
         }
+
         protected override void UnloadContent()
         {
         }
@@ -41,6 +44,7 @@ namespace MartialArtist
 
             base.Update(gameTime);
         }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
