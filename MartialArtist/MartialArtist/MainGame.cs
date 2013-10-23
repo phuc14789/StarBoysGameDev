@@ -65,6 +65,14 @@ namespace MartialArtist
             {
                 //MainMenu State
                 case GameState.MainMenu:
+
+                    mainMenu.Update(gameTime, Content);
+
+                    //Change gameState to Playing when button is clicked
+                    if (mainMenu.playButton.isClicked) { currentGameMenu = GameState.Playing; }
+
+                    //Change gameState to Playing when button is clicked
+                    if (mainMenu.exitButton.isClicked) { currentGameMenu = GameState.Exit; }
                     break;
 
                 //Playing State

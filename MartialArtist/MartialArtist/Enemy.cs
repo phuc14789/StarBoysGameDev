@@ -96,7 +96,6 @@ namespace MartialArtist
 
 
 
-
         #region Constructor
 
         public Enemy()
@@ -134,34 +133,18 @@ namespace MartialArtist
            
         }
 
-
-
-
         public void f_Update(GameTime gameTime)
         {
             // Gọi hàm Animation từ class Animation
 
         }
 
-
         public void f_Draw(SpriteBatch spriteBatch)
-        {
-            // 2 biến này lấy từ Animation
-            Rectangle dest = new Rectangle() ;
-            Rectangle source  = new Rectangle() ;
-
-
+        {          
             spriteBatch.Draw(_t_Enemy, Vector2.Zero, Color.White);
-
         }
 
         #endregion
-
-
-
-
-
-
 
 
     }
