@@ -23,7 +23,7 @@ namespace MartialArtist
         public Player(Game game)
             : base(game)
         {
-            // TODO: Construct any child components here
+            graphics = new GraphicsDeviceManager(game);
         }
 
         public override void Initialize()

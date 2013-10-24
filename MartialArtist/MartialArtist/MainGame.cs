@@ -24,6 +24,10 @@ namespace MartialArtist
         enum GameState
         {
             MainMenu,
+            Option,
+            Sorce,
+            About,
+            Help,
             Playing,
             GameOver,
             Exit,
