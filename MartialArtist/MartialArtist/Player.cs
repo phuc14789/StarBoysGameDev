@@ -39,7 +39,7 @@ namespace MartialArtist
 
 
             _Animation.Update(gameTime);
-            
+            characterControl();
             base.Update(gameTime);
         }
 
@@ -55,7 +55,7 @@ namespace MartialArtist
             base.LoadContent();     // Load từ cha
         }
 
-        protected override void Update(GameTime gameTime)
+        public void characterControl()
         {
             // Allows the game to exit
 
@@ -87,9 +87,6 @@ namespace MartialArtist
                     _vt2_position.X = graphics.PreferredBackBufferWidth - _t2_Player.Width;
 
             }
-
-
-            base.Update(gameTime);
         }
 
 
