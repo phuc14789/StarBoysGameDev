@@ -48,7 +48,7 @@ namespace MartialArtist
 
             _t2_Player = Game.Content.Load<Texture2D>("Player");
             
-            _Animation = new Animation(_t2_Player, 0, 2, 4);
+            _Animation = new Animation(_t2_Player, 0, 2, 4,50f);
             _Animation.Vt2_position = _vt2_position;
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
 

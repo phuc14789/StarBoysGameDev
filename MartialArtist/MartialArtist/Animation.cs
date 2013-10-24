@@ -46,9 +46,9 @@ namespace MartialArtist
         private Rectangle _rect_sourceRectangle;
         private Rectangle _rect_destinationRectangle;
 
-        //Speed of frame
         private float _f_elapse;
-        private float _f_delay = 50f;
+        //Speed of frame
+        private float _f_delay;
 
         //public 7 bien tu 1 den 7
         public SpriteBatch SpriteBatch
@@ -94,12 +94,14 @@ namespace MartialArtist
         }
 
         ///khai bao ham khoi tao voi 4 bien so
-        public Animation(Texture2D texture, int currentFrame, int rows, int columns)
+        public Animation(Texture2D texture, int currentFrame, int rows, int columns,float delay)
         {
             this.T_Image = texture;
             this.I_Rows = rows;
             this.I_Columns = columns;
             this._i_currentFrame = currentFrame;
+            this._f_delay = delay;
+
             _i_totalFrame = I_Rows * I_Columns;
 
             _i_width = T_Image.Width / I_Columns;
