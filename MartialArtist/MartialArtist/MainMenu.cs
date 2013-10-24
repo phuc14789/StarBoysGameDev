@@ -22,8 +22,8 @@ namespace MartialArtist
             _t_menuBackground = Content.Load<Texture2D>("Images/Background");
 
             //Create button
-            playButton = new Button();
-            exitButton = new Button();
+            playButton = new Button(1f);
+            exitButton = new Button(1f);
         }
 
         public void Update(GameTime gameTime, ContentManager Content)
