@@ -74,19 +74,23 @@ namespace MartialArtist
             set { _i_Heatlh = value; }
         }
 
-        public Enemy(Texture2D enemy)           
+        public Enemy(Texture2D enemy, Vector2 position, int health, int damage)           
         {
             this._t_Enemy = enemy;
+
+            // Vị trí để Enemy xuất hiện  
+            _vt2_PositionEnemy = position;
+
+            //Health of enemy
+            _i_Heatlh = health;
+
+            //Damage of enemy
+            _i_Damage = damage;
         }
 
-        /// <summary>
-        /// Khởi tạo cho Enemy
-        /// </summary>
         public void Initialize()
         {
-            _r_Random = new Random();
-            // Vị trí để Enemy xuất hiện                                                             
-            _vt2_PositionEnemy = new Vector2( _r_Random.Next(200, 2500), _r_Random.Next(200, 300) );
+            _r_Random = new Random();                                                                          
 
             // Trạng thái Enemy còn sống           
             _b_Life = true;
@@ -97,21 +101,15 @@ namespace MartialArtist
             // Sức mạnh Enemy                                                                                
             _i_Damage = 100;                                                                                                  
 
-        }
-        
-        /// <summary>
-        /// Load Enemy
-        /// </summary>
-        /// <param name="Content">Khởi tạo cho graphicsDevice</param>
+        }        
+
         public void LoadContent(ContentManager Content)
-        {
-            _t_Enemy = Content.Load<Texture2D>("Enemy");                                                                // Load hình ảnh Enemy
+        {                                                  
            
         }
 
         public void Update(GameTime gameTime)
         {
-            // Gọi hàm Animation từ class Animation
 
         }
 

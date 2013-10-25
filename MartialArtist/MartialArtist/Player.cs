@@ -98,15 +98,5 @@ namespace MartialArtist
             base.Draw(gameTime);
 
         }
-
-
-
-
-
-
-
-
-
-
     }
 }
