@@ -89,7 +89,6 @@ namespace MartialArtist
             }
         }
 
-
         public override void Draw(GameTime gameTime)
         {
            

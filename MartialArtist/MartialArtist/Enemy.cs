@@ -25,6 +25,7 @@ namespace MartialArtist
         private int _i_Heatlh;                                          // Máu của Enemy
 
         private Random _r_Random;                                       // Cho Enemy xuất hiện ngẫu nhiên
+        private Animation animation;
 
         public GraphicsDevice G_GraphicsDevice
         {
@@ -74,7 +75,7 @@ namespace MartialArtist
             set { _i_Heatlh = value; }
         }
 
-        public Enemy(Texture2D enemy, Vector2 position, int health, int damage)           
+        public Enemy(Texture2D enemy, Vector2 position, int health, int damage,int currentFrame, int rows, int columns,float delay)           
         {
             this._t_Enemy = enemy;
 
@@ -86,6 +87,8 @@ namespace MartialArtist
 
             //Damage of enemy
             _i_Damage = damage;
+
+            animation = new Animation(enemy, currentFrame, rows, columns, delay);
         }
 
         public void Initialize()
