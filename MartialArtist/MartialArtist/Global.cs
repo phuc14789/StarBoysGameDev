@@ -6,10 +6,10 @@ using Microsoft.Xna.Framework;
 
 namespace MartialArtist
 {
-    public static class globals
+    public static class Global
     {
-        static int screenWidth = 800;
-        static int screenHeight = 480;
+        public static int screenWidth = 800;
+        public static int screenHeight = 480;
 
         public static bool intersectPerPixcel(Rectangle rectangleA, Color[] dataA,
                                     Rectangle rectangleB, Color[] dataB)
