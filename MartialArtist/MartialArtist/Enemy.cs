@@ -13,18 +13,34 @@ namespace MartialArtist
 {
     class Enemy
     {
-        private SpriteBatch _p_SpriteBatch;                             // Dùng để load hình ảnh
-        private GraphicsDevice _g_GraphicsDevice;                       // GraphicsDevice
+        // Dùng để load hình ảnh
+        private SpriteBatch _p_SpriteBatch;
 
-        private Texture2D _t_Enemy;                                     // Texture để load Enemy    Có thế kế thừa từ Animation
-        private Vector2 _vt2_PositionEnemy;                             // Vị trí Enemy
+        // GraphicsDevice
+        private GraphicsDevice _g_GraphicsDevice;
 
-        private int  _f_Speed;                                          // Tốc độ Enemy
-        private bool _b_Life;                                           // Mạng sống của Enemy
-        private int _i_Damage;                                          // Sức mạnh của Enemy
-        private int _i_Heatlh;                                          // Máu của Enemy
+        // Texture để load Enemy    Có thế kế thừa từ Animation        
+        private Texture2D _t_Enemy;
+        
+        // Vị trí Enemy
+        private Vector2 _vt2_PositionEnemy;
 
-        private Random _r_Random;                                       // Cho Enemy xuất hiện ngẫu nhiên
+        // Tốc độ Enemy
+        private int  _f_Speed;
+
+        // Mạng sống của Enemy
+        private bool _b_Life;
+
+        // Sức mạnh của Enemy                          
+        private int _i_Damage;
+
+        // Máu của Enemy
+        private int _i_Heatlh;
+
+        // Cho Enemy xuất hiện ngẫu nhiên
+        private Random _r_Random;        
+        
+        // Khởi tạo cho Animation             
         private Animation animation;
 
         public GraphicsDevice G_GraphicsDevice
