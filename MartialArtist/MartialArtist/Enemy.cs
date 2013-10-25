@@ -122,7 +122,7 @@ namespace MartialArtist
             // Khởi tạo các biến lấy từ Animation qua
  
         }
-
+        
         /// <summary>
         /// Load Enemy
         /// </summary>
