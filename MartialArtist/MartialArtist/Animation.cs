@@ -106,6 +106,7 @@ namespace MartialArtist
 
             _i_width = T_Image.Width / I_Columns;
             _i_heigth = T_Image.Height / I_Rows;
+            
         }
 
         ///khai bao ham Update
