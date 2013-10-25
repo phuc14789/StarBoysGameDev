@@ -13,9 +13,6 @@ namespace MartialArtist
 {
     class Enemy
     {
-
-        #region Field
-
         private SpriteBatch _p_SpriteBatch;                             // Dùng để load hình ảnh
         private GraphicsDevice _g_GraphicsDevice;                       // GraphicsDevice
 
@@ -28,18 +25,6 @@ namespace MartialArtist
         private int _i_Heatlh;                                          // Máu của Enemy
 
         private Random _r_Random;                                       // Cho Enemy xuất hiện ngẫu nhiên
-
-
-
-        // Các thuộc tính cần phải kết thừa từ Animation
-
-        // _CurrentFrame, _TotalFrame, _Width, _Height, _srcRectangle,_desRectangle, _Timer, _Interal 
-
-
-        #endregion
-
-
-        #region Properties
 
         public GraphicsDevice G_GraphicsDevice
         {
@@ -59,13 +44,11 @@ namespace MartialArtist
             set { _t_Enemy = value; }
         }
 
-
         public Vector2 Vt2_PositionEnemy
         {
             get { return _vt2_PositionEnemy; }
             set { _vt2_PositionEnemy = value; }
         }
-
 
         public int F_Speed
         {
@@ -79,7 +62,6 @@ namespace MartialArtist
             set { _b_Life = value; }
         }
 
-
         public int I_Damage
         {
             get { return _i_Damage; }
@@ -92,60 +74,50 @@ namespace MartialArtist
             set { _i_Heatlh = value; }
         }
 
-        #endregion
-
-
-
-        #region Constructor
-
-        public Enemy()
-           
-        { }
-
-
-        #endregion
-
-        #region Method
-
+        public Enemy(Texture2D enemy)           
+        {
+            this._t_Enemy = enemy;
+        }
 
         /// <summary>
         /// Khởi tạo cho Enemy
         /// </summary>
-        public void f_Initialize()
+        public void Initialize()
         {
-            _r_Random = new Random();                                                                                       // Khởi tạo Ramdom
-            _vt2_PositionEnemy = new Vector2( _r_Random.Next(200, 2500), _r_Random.Next(200, 300) );                        // Vị trí để Enemy xuất hiện
-            _b_Life = true;                                                                                                 // Trạng thái Enemy còn sống
-            _i_Heatlh = 100;                                                                                                // Máu Enemy
-            _i_Damage = 100;                                                                                                // Sức mạnh Enemy   
- 
-            // Khởi tạo các biến lấy từ Animation qua
- 
+            _r_Random = new Random();
+            // Vị trí để Enemy xuất hiện                                                             
+            _vt2_PositionEnemy = new Vector2( _r_Random.Next(200, 2500), _r_Random.Next(200, 300) );
+
+            // Trạng thái Enemy còn sống           
+            _b_Life = true;
+
+            // Máu Enemy                                                                                 
+            _i_Heatlh = 100;
+
+            // Sức mạnh Enemy                                                                                
+            _i_Damage = 100;                                                                                                  
+
         }
         
         /// <summary>
         /// Load Enemy
         /// </summary>
         /// <param name="Content">Khởi tạo cho graphicsDevice</param>
-        public void f_LoadContent(ContentManager Content)
+        public void LoadContent(ContentManager Content)
         {
             _t_Enemy = Content.Load<Texture2D>("Enemy");                                                                // Load hình ảnh Enemy
            
         }
 
-        public void f_Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             // Gọi hàm Animation từ class Animation
 
         }
 
-        public void f_Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {          
             spriteBatch.Draw(_t_Enemy, Vector2.Zero, Color.White);
         }
-
-        #endregion
-
-
     }
 }
