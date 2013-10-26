@@ -106,7 +106,7 @@ namespace MartialArtist
 
             _i_width = T_Image.Width / I_Columns;
             _i_heigth = T_Image.Height / I_Rows;
-            
+            rectSource();
         }
 
         ///khai bao ham Update
@@ -122,15 +122,19 @@ namespace MartialArtist
                     _i_currentFrame++;
                 _f_elapse = 0;
             }
+            
+            _rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _i_width, _i_heigth);
+        }
 
+        public void rectSource()
+        {
             //Calculate current frame
             int row = (int)((float)_i_currentFrame / (float)I_Columns);
             int column = _i_currentFrame % _i_Columns;
 
             //Update frame
             _rect_sourceRectangle = new Rectangle(_i_width * column, _i_heigth * row, _i_width, _i_heigth);
-            _rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _i_width, _i_heigth);
-        }     
+        }
 
         ///khai bao ham Draw
         public void Draw(SpriteBatch spriteBatch)

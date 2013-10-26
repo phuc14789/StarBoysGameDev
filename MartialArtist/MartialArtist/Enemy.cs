@@ -113,12 +113,13 @@ namespace MartialArtist
 
         public void Update(GameTime gameTime)
         {
-
+            animation.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {          
-            spriteBatch.Draw(_t_Enemy, Vector2.Zero, Color.White);
+            //spriteBatch.Draw(_t_Enemy, Vector2.Zero, Color.White);
+            animation.Draw(spriteBatch);
         }
     }
 }
