@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MartialArtist
 {
-    abstract class Animation
+    public abstract class Animation
     {
         //2. khai bao bien dung de tao Image
         private Texture2D _t_Image;
@@ -40,7 +40,7 @@ namespace MartialArtist
 
         //12.13 khai bao bien khung hinh va diem den cua khung hinh
         private Rectangle _rect_sourceRectangle;
-        private Rectangle _rect_destinationRectangle;
+        //private Rectangle _rect_destinationRectangle;
 
         private float _f_elapse;
         //Speed of frame

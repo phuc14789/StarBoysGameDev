@@ -17,13 +17,12 @@ namespace MartialArtist
         int health;
         int life;
         Vector2 _vt2_position;
-        Texture2D _t2_Player;
-        GraphicsDeviceManager graphics;
+        Global global = new Global();
 
         public Player(Texture2D enemy, Vector2 position, int health, int life, int currentFrame, int rows, int columns,float delay,float scale) : base(enemy ,position, currentFrame ,rows ,columns ,delay,scale )
         {
             this.health = health;
-            this.life = life;
+            this.life = life;            
         }
 
         public void Initialize()
@@ -51,8 +50,8 @@ namespace MartialArtist
             if (key.IsKeyDown(Keys.S))
             {
                 _vt2_position.Y += 3;
-                if (_vt2_position.Y + _t2_Player.Height > graphics.PreferredBackBufferHeight)
-                    _vt2_position.Y = graphics.PreferredBackBufferHeight - _t2_Player.Height;
+                if (_vt2_position.Y + T_Image.Height > global .screenHeight)
+                    _vt2_position.Y = global.screenHeight - T_Image.Height;
             }
             if (key.IsKeyDown(Keys.A))
             {
@@ -63,8 +62,8 @@ namespace MartialArtist
             if (key.IsKeyDown(Keys.D))
             {
                 _vt2_position.X += 3;
-                if (_vt2_position.X + _t2_Player.Width > graphics.PreferredBackBufferWidth)
-                    _vt2_position.X = graphics.PreferredBackBufferWidth - _t2_Player.Width;
+                if (_vt2_position.X + T_Image.Width > global .screenWidth)
+                    _vt2_position.X = global.screenWidth - T_Image.Width;
 
             }
         }
