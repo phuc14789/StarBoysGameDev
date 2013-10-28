@@ -46,6 +46,9 @@ namespace MartialArtist
         //Speed of frame
         private float _f_delay;
 
+        //Scale of image
+        private float _f_scale;
+
         public Texture2D T_Image
         {
             get { return _t_Image; }
@@ -83,7 +86,7 @@ namespace MartialArtist
         }
 
         ///khai bao ham khoi tao voi 4 bien so
-        public Animation(Texture2D texture, Vector2 position, int currentFrame, int rows, int columns,float delay)
+        public Animation(Texture2D texture, Vector2 position, int currentFrame, int rows, int columns,float delay, float scale)
         {
             //Initialize variable
             _t_Image = texture;
@@ -91,7 +94,7 @@ namespace MartialArtist
             _i_Columns = columns;
             _i_currentFrame = currentFrame;
             _f_delay = delay;
-
+            _f_scale = scale;
             //Caculate variable
             _i_totalFrame = I_Rows * I_Columns;
             _i_width = T_Image.Width / I_Columns;
@@ -114,7 +117,7 @@ namespace MartialArtist
                 _f_elapse = 0;
             }
             
-            _rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _i_width, _i_heigth);
+            //_rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _i_width, _i_heigth); -->Khong can?
         }
 
         public void rectSource()
@@ -130,7 +133,8 @@ namespace MartialArtist
         ///khai bao ham Draw
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_t_Image, _rect_destinationRectangle, _rect_sourceRectangle, Color.White);
+            spriteBatch.Draw(_t_Image, _vt2_position, _rect_sourceRectangle, Color.White, 0f, Vector2.Zero, _f_scale, SpriteEffects.None, 0f);
         }
     }
 }
+

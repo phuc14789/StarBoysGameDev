@@ -79,7 +79,7 @@ namespace MartialArtist
             set { _i_Heatlh = value; }
         }
 
-        public Enemy(Texture2D enemy, Vector2 position, int health, int damage,int currentFrame, int rows, int columns,float delay) : base(enemy ,position, currentFrame ,rows ,columns ,delay )           
+        public Enemy(Texture2D enemy, Vector2 position, int health, int damage,int currentFrame, int rows, int columns,float delay,float scale) : base(enemy ,position, currentFrame ,rows ,columns ,delay,scale)           
         {
             //Health of enemy
             _i_Heatlh = health;
