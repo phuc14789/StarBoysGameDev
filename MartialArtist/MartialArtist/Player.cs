@@ -17,11 +17,15 @@ namespace MartialArtist
         int health;
         int life;
         Vector2 _vt2_position;
-
+        public Color[] textureData;
         public Player(Texture2D enemy, Vector2 position, int health, int life, int currentFrame, int rows, int columns,float delay,float scale) : base(enemy ,position, currentFrame ,rows ,columns ,delay,scale )
         {
             this.health = health;
-            this.life = life;            
+            this.life = life;
+
+
+            textureData = new Color[enemy.Width * enemy.Height];
+            enemy.GetData(textureData);
         }
 
         public void Initialize()
