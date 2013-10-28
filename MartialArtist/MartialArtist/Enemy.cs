@@ -79,14 +79,21 @@ namespace MartialArtist
             set { _i_Heatlh = value; }
         }
 
-        public Enemy(Texture2D enemy, Vector2 position, int health, int damage,int currentFrame, int rows, int columns,float delay,float scale) : base(enemy ,position, currentFrame ,rows ,columns ,delay,scale)           
+        public Enemy(Texture2D enemy, Vector2 position, int health, int damage, int currentFrame, int rows, int columns, float delay, float scale) 
+            : base(enemy , position, currentFrame , rows , columns , delay , scale)           
         {
             //Health of enemy
             _i_Heatlh = health;
 
             //Damage of enemy
             _i_Damage = damage;
+
+            // Random vị trí enemy xuất hiện
+            _vt2_position = f_RandomEnemy(new Vector2(0, 100), new Vector2(700, 800));
         }
+
+
+        
 
         public void Initialize()
         {
@@ -95,8 +102,61 @@ namespace MartialArtist
             // Trạng thái Enemy còn sống           
             _b_Life = true;                                                                                              
 
-        }        
-        
+        }
+
+
+        // Hàm này 
+
+        /// <summary>
+        /// Random vị trí enemy từ đâu đến đầu trong map
+        /// </summary>
+        /// <param name="position_1">Vùng quy định bên trái. Giả xử bên trái là từ 0 ==> 200</param>
+        /// <param name="position_2">Vùng quy định bên phải. Giả xử bên phải là từ 700 ==> 800</param>
+        /// <returns>Vị trí enemy được tao ra</returns>
+        public  Vector2 f_RandomEnemy(Vector2 position_1, Vector2 position_2)
+        {
+            Random rd = new Random();
+            // Trả về 0 or là 1 ==> 0: là left, 1: right
+            int pos = rd.Next(0, 2);
+
+            if (pos == 0)
+            {
+                // Lấy tọa độ của vị trí X khi đã random
+                int number = rd.Next((int)position_1.X, (int)position_1.Y);
+                // Lấy tọa độ của vị trí Y khi đã random
+                int number2 = rd.Next(0, Global.screenHeight);
+
+                // Nếu vị trí random > Kích thước hình thì
+                if (number - _i_width >= 0)
+
+                    return new Vector2(number - _i_width, (number2 - _i_heigth) >= 0 ? number2 - _i_heigth : number2);
+                else
+                    return new Vector2(number, (number2 - _i_heigth) >= 0 ? number2 - _i_heigth : number2);
+
+            }
+            else
+            {
+                // Lấy tọa độ của vị trí X khi đã random
+                int number = rd.Next((int)position_2.X, (int)position_2.Y);
+                // Lấy tọa độ của vị trí Y khi đã random
+                int number2 = rd.Next(0, Global.screenHeight);
+
+                // Nếu vị trí random > Kích thước hình thì
+                if (number - _i_width >= 0)
+                    return new Vector2(number - _i_width, (number2 - _i_heigth) >= 0 ? number2 - _i_heigth : number2);
+                return new Vector2(number, (number2 - _i_heigth) >= 0 ? number2 - _i_heigth : number2);
+            }
+        }
+
+
+
+
+        public void f_MoveEnemy(GameTime gameTime)
+        {
+ 
+
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -104,6 +164,7 @@ namespace MartialArtist
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            
             base.Draw(spriteBatch);            
         }
     }
