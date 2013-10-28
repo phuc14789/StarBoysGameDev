@@ -74,8 +74,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Player\Walk.png">
-      <Name>Walk</Name>
+    <Compile Include="Images\Player\Player_Walk.png">
+      <Name>Player_Walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Player\Player_SlashDown.png">
+      <Name>Player_SlashDown</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
