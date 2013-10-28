@@ -11,11 +11,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MartialArtist
 {
-    class Enemy
+    class Enemy : Animation
     {
-        // Dùng để load hình ảnh
-        private SpriteBatch _p_SpriteBatch;
-
         // GraphicsDevice
         private GraphicsDevice _g_GraphicsDevice;
 
@@ -39,20 +36,11 @@ namespace MartialArtist
 
         // Cho Enemy xuất hiện ngẫu nhiên
         private Random _r_Random;        
-        
-        // Khởi tạo cho Animation             
-        private Animation animation;
 
         public GraphicsDevice G_GraphicsDevice
         {
             get { return _g_GraphicsDevice; }
             set { _g_GraphicsDevice = value; }
-        }
-
-        public SpriteBatch P_SpriteBatch
-        {
-            get { return _p_SpriteBatch; }
-            set { _p_SpriteBatch = value; }
         }
 
         public Texture2D T_Enemy
@@ -91,20 +79,13 @@ namespace MartialArtist
             set { _i_Heatlh = value; }
         }
 
-        public Enemy(Texture2D enemy, Vector2 position, int health, int damage,int currentFrame, int rows, int columns,float delay)           
+        public Enemy(Texture2D enemy, Vector2 position, int health, int damage,int currentFrame, int rows, int columns,float delay) : base(enemy ,position, currentFrame ,rows ,columns ,delay )           
         {
-            this._t_Enemy = enemy;
-
-            // Vị trí để Enemy xuất hiện  
-            _vt2_PositionEnemy = position;
-
             //Health of enemy
             _i_Heatlh = health;
 
             //Damage of enemy
             _i_Damage = damage;
-
-            animation = new Animation(enemy, currentFrame, rows, columns, delay);
         }
 
         public void Initialize()
@@ -112,30 +93,18 @@ namespace MartialArtist
             _r_Random = new Random();                                                                          
 
             // Trạng thái Enemy còn sống           
-            _b_Life = true;
-
-            // Máu Enemy                                                                                 
-            _i_Heatlh = 100;
-
-            // Sức mạnh Enemy                                                                                
-            _i_Damage = 100;                                                                                                  
+            _b_Life = true;                                                                                              
 
         }        
-
-        public void LoadContent(ContentManager Content)
-        {                                                  
-           
-        }
-
-        public void Update(GameTime gameTime)
+        
+        public override void Update(GameTime gameTime)
         {
-            animation.Update(gameTime);
+            base.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {          
-            //spriteBatch.Draw(_t_Enemy, Vector2.Zero, Color.White);
-            animation.Draw(spriteBatch);
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);            
         }
     }
 }

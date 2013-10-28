@@ -12,54 +12,34 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MartialArtist
 {
-    class Player : DrawableGameComponent
+    public class Player : Animation
     {
-        SpriteBatch spriteBatch;
-        Animation _Animation;
+        int health;
+        int life;
         Vector2 _vt2_position;
         Texture2D _t2_Player;
         GraphicsDeviceManager graphics;
 
-        public Player(Game game)
-            : base(game)
+        public Player(Texture2D enemy, Vector2 position, int health, int life, int currentFrame, int rows, int columns,float delay) : base(enemy ,position, currentFrame ,rows ,columns ,delay )
         {
-            graphics = new GraphicsDeviceManager(game);
+            this.health = health;
+            this.life = life;
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
             // TODO: Add your initialization code here
 
-            base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
-
-
-            _Animation.Update(gameTime);
             characterControl();
             base.Update(gameTime);
         }
 
-        protected override void LoadContent()
-        {
-
-            _t2_Player = Game.Content.Load<Texture2D>("Player");
-            
-            _Animation = new Animation(_t2_Player, 0, 2, 4,50f);
-            _Animation.Vt2_position = _vt2_position;
-            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-
-            base.LoadContent();     // Load từ cha
-        }
-
         public void characterControl()
-        {
-            // Allows the game to exit
-
-           
+        { 
             KeyboardState key = Keyboard.GetState();
 
             if (key.IsKeyDown(Keys.W))
@@ -89,13 +69,9 @@ namespace MartialArtist
             }
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-           
-            _Animation.Draw(spriteBatch);
-            
-            base.Draw(gameTime);
-
+            base.Draw(spriteBatch);
         }
     }
 }

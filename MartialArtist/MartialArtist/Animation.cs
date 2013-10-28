@@ -12,12 +12,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MartialArtist
 {
-    public class Animation
+    abstract class Animation
     {
-        /// khai bao 13 bien
-        //1. khai bao bien SpriteBatch
-        private SpriteBatch spriteBatch;
-
         //2. khai bao bien dung de tao Image
         private Texture2D _t_Image;
 
@@ -49,13 +45,6 @@ namespace MartialArtist
         private float _f_elapse;
         //Speed of frame
         private float _f_delay;
-
-        //public 7 bien tu 1 den 7
-        public SpriteBatch SpriteBatch
-        {
-            get { return spriteBatch; }
-            set { spriteBatch = value; }
-        }
 
         public Texture2D T_Image
         {
@@ -94,29 +83,31 @@ namespace MartialArtist
         }
 
         ///khai bao ham khoi tao voi 4 bien so
-        public Animation(Texture2D texture, int currentFrame, int rows, int columns,float delay)
+        public Animation(Texture2D texture, Vector2 position, int currentFrame, int rows, int columns,float delay)
         {
-            this.T_Image = texture;
-            this.I_Rows = rows;
-            this.I_Columns = columns;
-            this._i_currentFrame = currentFrame;
-            this._f_delay = delay;
+            //Initialize variable
+            _t_Image = texture;
+            _i_Rows = rows;
+            _i_Columns = columns;
+            _i_currentFrame = currentFrame;
+            _f_delay = delay;
 
+            //Caculate variable
             _i_totalFrame = I_Rows * I_Columns;
-
             _i_width = T_Image.Width / I_Columns;
             _i_heigth = T_Image.Height / I_Rows;
+
             rectSource();
         }
 
         ///khai bao ham Update
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             //Moving frame of character
             _f_elapse += (float)gameTime.ElapsedGameTime.Milliseconds;
             if (_f_elapse >= _f_delay)
             {
-                if (_i_currentFrame >= _i_totalFrame)
+                if (_i_currentFrame >= _i_totalFrame -1)
                     _i_currentFrame = 0;
                 else
                     _i_currentFrame++;
@@ -137,7 +128,7 @@ namespace MartialArtist
         }
 
         ///khai bao ham Draw
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_t_Image, _rect_destinationRectangle, _rect_sourceRectangle, Color.White);
         }
