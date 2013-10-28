@@ -15,75 +15,39 @@ namespace MartialArtist
     public abstract class Animation
     {
         //2. khai bao bien dung de tao Image
-        private Texture2D _t_Image;
+        protected Texture2D _t_Image;
 
         //3. khai bao bien dung de xac dinh toa do
-        private Vector2 _vt2_position;
+        protected Vector2 _vt2_position;
 
         //4. khai bao bien dung de xac dinh van toc
-        private Vector2 _vt2_Velocity;
+        protected Vector2 _vt2_Velocity;
 
         //5. khai bao bien dung de xac dinh vi tri xuat phat
-        private Vector2 _vt2_Origin;
+        protected Vector2 _vt2_Origin;
 
         //6.7 khai bao bien hang va cot
-        private int _i_Rows;
-        private int _i_Columns;
+        protected int _i_Rows;
+        protected int _i_Columns;
 
         //8.9 khai bao bien hinh anh tong va hien tai
-        private int _i_totalFrame;
-        private int _i_currentFrame;
+        protected int _i_totalFrame;
+        protected int _i_currentFrame;
 
         //10.11 khai bao chieu cao va chieu rong
-        private int _i_width;
-        private int _i_heigth;
+        protected int _i_width;
+        protected int _i_heigth;
 
         //12.13 khai bao bien khung hinh va diem den cua khung hinh
-        private Rectangle _rect_sourceRectangle;
+        protected Rectangle _rect_sourceRectangle;
         //private Rectangle _rect_destinationRectangle;
 
-        private float _f_elapse;
+        protected float _f_elapse;
         //Speed of frame
-        private float _f_delay;
+        protected float _f_delay;
 
         //Scale of image
-        private float _f_scale;
-
-        public Texture2D T_Image
-        {
-            get { return _t_Image; }
-            set { _t_Image = value; }
-        }
-
-        public Vector2 Vt2_position
-        {
-            get { return _vt2_position; }
-            set { _vt2_position = value; }
-        }
-
-        public Vector2 Vt2_Velocity
-        {
-            get { return _vt2_Velocity; }
-            set { _vt2_Velocity = value; }
-        }
-
-        public Vector2 Vt2_Origin
-        {
-            get { return _vt2_Origin; }
-            set { _vt2_Origin = value; }
-        }
-
-        public int I_Rows
-        {
-            get { return _i_Rows; }
-            set { _i_Rows = value; }
-        }
-
-        public int I_Columns
-        {
-            get { return _i_Columns; }
-            set { _i_Columns = value; }
-        }
+        protected float _f_scale;    
 
         ///khai bao ham khoi tao voi 4 bien so
         public Animation(Texture2D texture, Vector2 position, int currentFrame, int rows, int columns,float delay, float scale)
@@ -95,10 +59,10 @@ namespace MartialArtist
             _i_currentFrame = currentFrame;
             _f_delay = delay;
             _f_scale = scale;
-            //Caculate variable
-            _i_totalFrame = I_Rows * I_Columns;
-            _i_width = T_Image.Width / I_Columns;
-            _i_heigth = T_Image.Height / I_Rows;
+            //Calculate variable
+            _i_totalFrame = _i_Rows * _i_Columns;
+            _i_width = _t_Image.Width / _i_Columns;
+            _i_heigth = _t_Image.Height / _i_Rows;
 
             rectSource();
         }
@@ -123,7 +87,7 @@ namespace MartialArtist
         public void rectSource()
         {
             //Calculate current frame
-            int row = (int)((float)_i_currentFrame / (float)I_Columns);
+            int row = (int)((float)_i_currentFrame / (float)_i_Columns);
             int column = _i_currentFrame % _i_Columns;
 
             //Update frame

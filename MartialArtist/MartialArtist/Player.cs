@@ -41,7 +41,7 @@ namespace MartialArtist
         }
 
         public void characterControl()
-        { 
+        {
             KeyboardState key = Keyboard.GetState();
 
             if (key.IsKeyDown(Keys.W))
@@ -53,8 +53,8 @@ namespace MartialArtist
             if (key.IsKeyDown(Keys.S))
             {
                 _vt2_position.Y += 3;
-                if (_vt2_position.Y + T_Image.Height > Global .screenHeight)
-                    _vt2_position.Y = Global.screenHeight - T_Image.Height;
+                if (_vt2_position.Y + _t_Image.Height > Global.screenHeight)
+                    _vt2_position.Y = Global.screenHeight - _t_Image.Height;
             }
             if (key.IsKeyDown(Keys.A))
             {
@@ -65,8 +65,8 @@ namespace MartialArtist
             if (key.IsKeyDown(Keys.D))
             {
                 _vt2_position.X += 3;
-                if (_vt2_position.X + T_Image.Width > Global .screenWidth)
-                    _vt2_position.X = Global.screenWidth - T_Image.Width;
+                if (_vt2_position.X + _t_Image.Width > Global.screenWidth)
+                    _vt2_position.X = Global.screenWidth - _t_Image.Width;
 
             }
         }
