@@ -20,7 +20,7 @@ namespace MartialArtist
         Texture2D _t2_Player;
         GraphicsDeviceManager graphics;
 
-        public Player(Texture2D enemy, Vector2 position, int health, int life, int currentFrame, int rows, int columns,float delay) : base(enemy ,position, currentFrame ,rows ,columns ,delay )
+        public Player(Texture2D enemy, Vector2 position, int health, int life, int currentFrame, int rows, int columns,float delay,float scale) : base(enemy ,position, currentFrame ,rows ,columns ,delay,scale )
         {
             this.health = health;
             this.life = life;
