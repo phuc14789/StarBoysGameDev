@@ -60,6 +60,7 @@ namespace MartialArtist
             _f_delay = delay;
             _f_scale = scale;
             _vt2_position = position;
+
             //Calculate variable
             _i_totalFrame = _i_Rows * _i_Columns;
             _i_width = _t_Image.Width / _i_Columns;
@@ -81,7 +82,7 @@ namespace MartialArtist
                     _i_currentFrame++;
                 _f_elapse = 0;
             }
-            
+            rectSource();
             //_rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _i_width, _i_heigth); -->Khong can?
         }
 
