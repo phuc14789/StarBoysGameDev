@@ -59,6 +59,7 @@ namespace MartialArtist
             _i_currentFrame = currentFrame;
             _f_delay = delay;
             _f_scale = scale;
+            _vt2_position = position;
             //Calculate variable
             _i_totalFrame = _i_Rows * _i_Columns;
             _i_width = _t_Image.Width / _i_Columns;
