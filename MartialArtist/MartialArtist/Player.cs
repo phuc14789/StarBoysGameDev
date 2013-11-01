@@ -25,13 +25,13 @@ namespace MartialArtist
         float jumpSpeed = 1000f;
         bool jump = false;
 
-        public Player(Texture2D enemy, Vector2 position, int health, int life, int currentFrame, int rows, int columns,float delay,float scale) : base(enemy ,position, currentFrame ,rows ,columns ,delay,scale )
+        public Player(Texture2D player, Vector2 position, int health, int life, int currentFrame, int rows, int columns,float delay,float scale) : base(player ,position, currentFrame ,rows ,columns ,delay,scale )
         {
             this.health = health;
             this.life = life;
 
-            textureData = new Color[enemy.Width * enemy.Height];
-            enemy.GetData(textureData);
+            textureData = new Color[_i_width * _i_heigth];
+            player.GetData(textureData);
         }
 
         public void Initialize()

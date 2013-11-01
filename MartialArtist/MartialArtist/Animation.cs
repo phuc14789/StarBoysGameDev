@@ -30,7 +30,7 @@ namespace MartialArtist
 
         //10.11 khai bao chieu cao va chieu rong
         public int _i_width;
-        protected int _i_heigth;
+        public int _i_heigth;
 
         //12.13 khai bao bien khung hinh va diem den cua khung hinh
         protected Rectangle _rect_sourceRectangle;
