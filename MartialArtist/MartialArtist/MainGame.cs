@@ -16,7 +16,8 @@ namespace MartialArtist
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         MainMenu mainMenu;
-
+        Camera camera;
+        Player player;
         //Begin gameState, begin with Main Menu
         GameState currentGameMenu = GameState.MainMenu;
 
@@ -50,6 +51,8 @@ namespace MartialArtist
         {
             //Create MainMenu Object
             mainMenu = new MainMenu();
+            camera = new Camera(GraphicsDevice.Viewport);
+            player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"), new Vector2(320, 200), 100, 3, 0, 1, 8, 50f, 0.8f);
             base.Initialize();
         }
 
@@ -71,7 +74,7 @@ namespace MartialArtist
                 case GameState.MainMenu:
 
                     mainMenu.Update(gameTime, Content);
-
+                    camera.Update(gameTime, player);
                     //Change gameState to Playing when button is clicked
                     if (mainMenu.playButton.isClicked) { currentGameMenu = GameState.Playing; }
 
@@ -94,7 +97,7 @@ namespace MartialArtist
 
         protected override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred ,BlendState .AlphaBlend ,null,null,null,null,camera .transform);
             switch (currentGameMenu)
             {
                 //MainMenu State
