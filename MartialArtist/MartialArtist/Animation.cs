@@ -15,16 +15,10 @@ namespace MartialArtist
     public abstract class Animation
     {
         //2. khai bao bien dung de tao Image
-        protected Texture2D _t_Image;
+        public Texture2D _t_Image;
 
         //3. khai bao bien dung de xac dinh toa do
-        protected Vector2 _vt2_position;
-
-        //4. khai bao bien dung de xac dinh van toc
-        protected Vector2 _vt2_Velocity;
-
-        //5. khai bao bien dung de xac dinh vi tri xuat phat
-        protected Vector2 _vt2_Origin;
+        public Vector2 _vt2_position;
 
         //6.7 khai bao bien hang va cot
         protected int _i_Rows;
@@ -35,7 +29,7 @@ namespace MartialArtist
         protected int _i_currentFrame;
 
         //10.11 khai bao chieu cao va chieu rong
-        protected int _i_width;
+        public int _i_width;
         protected int _i_heigth;
 
         //12.13 khai bao bien khung hinh va diem den cua khung hinh
@@ -66,7 +60,7 @@ namespace MartialArtist
             _i_width = _t_Image.Width / _i_Columns;
             _i_heigth = _t_Image.Height / _i_Rows;
 
-            rectSource();
+            animationCharacter();
         }
 
         ///khai bao ham Update
@@ -82,11 +76,11 @@ namespace MartialArtist
                     _i_currentFrame++;
                 _f_elapse = 0;
             }
-            rectSource();
+            //animationCharacter();
             //_rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _i_width, _i_heigth); -->Khong can?
         }
 
-        public void rectSource()
+        public void animationCharacter()
         {
             //Calculate current frame
             int row = (int)((float)_i_currentFrame / (float)_i_Columns);
