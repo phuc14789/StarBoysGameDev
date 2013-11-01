@@ -43,9 +43,8 @@ namespace MartialArtist
         //Scale of image
         protected float _f_scale;
 
-        protected bool facingRight = true;
-
         protected SpriteEffects flip = SpriteEffects.None;
+        
         ///khai bao ham khoi tao voi 4 bien so
         public Animation(Texture2D texture, Vector2 position, int currentFrame, int rows, int columns,float delay, float scale)
         {
@@ -74,21 +73,7 @@ namespace MartialArtist
 
             //Update frame
             _rect_sourceRectangle = new Rectangle(_i_width * column, _i_heigth * row, _i_width, _i_heigth);
-        }
-
-        public void flipCharacter()
-        {
-            if (!facingRight)
-            {
-                flip = SpriteEffects.None;
-                facingRight = true;
-            }
-            else
-            {
-                flip = SpriteEffects.FlipHorizontally;
-                facingRight = false;
-            }
-        }
+        }        
 
         ///khai bao ham Update
         public virtual void Update(GameTime gameTime)
