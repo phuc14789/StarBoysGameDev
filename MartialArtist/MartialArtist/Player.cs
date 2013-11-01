@@ -54,10 +54,12 @@ namespace MartialArtist
             if (key.IsKeyDown(Keys.D))
             {
                 velocity.X = moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                flipCharacter();
             }
             else if (key.IsKeyDown(Keys.A))
             {
                 velocity.X = -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                flipCharacter();
             }
             else
                 velocity.X = 0;
