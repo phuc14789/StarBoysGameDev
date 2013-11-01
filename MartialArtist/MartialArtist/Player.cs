@@ -30,7 +30,7 @@ namespace MartialArtist
             this.health = health;
             this.life = life;
 
-            textureData = new Color[_i_width * _i_heigth];
+            textureData = new Color[player.Width  * player .Height];
             player.GetData(textureData);
         }
 
