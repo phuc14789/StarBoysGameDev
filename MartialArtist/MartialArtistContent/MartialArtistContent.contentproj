@@ -45,29 +45,29 @@
     <Folder Include="Sounds\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Background.jpg">
+    <Compile Include="Images\Background\Background.jpg">
       <Name>Background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\exit.png">
+    <Compile Include="Images\Button\exit.png">
       <Name>exit</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\exit_click.png">
+    <Compile Include="Images\Button\exit_click.png">
       <Name>exit_click</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\play.png">
+    <Compile Include="Images\Button\play.png">
       <Name>play</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\play_click.png">
+    <Compile Include="Images\Button\play_click.png">
       <Name>play_click</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
