@@ -33,7 +33,7 @@ namespace MartialArtist
         public int _i_heigth;
 
         //12.13 khai bao bien khung hinh va diem den cua khung hinh
-        protected Rectangle _rect_sourceRectangle;
+        public Rectangle _rect_sourceRectangle;
         //private Rectangle _rect_destinationRectangle;
 
         protected float _f_elapse;
