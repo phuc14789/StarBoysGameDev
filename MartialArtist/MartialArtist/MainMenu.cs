@@ -58,9 +58,11 @@ namespace MartialArtist
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             spriteBatch.Draw(_t_menuBackground, new Rectangle(0, 0, 800, 480), Color.White);
             playButton.Draw(spriteBatch);
             exitButton.Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }
