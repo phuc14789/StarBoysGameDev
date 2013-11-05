@@ -16,7 +16,7 @@ namespace MartialArtist
         public Level1(Game g, ContentManager Content)
         {
             camera = new Camera(g.GraphicsDevice.Viewport);
-            player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"), new Vector2(0, 0), 100, 3, 0, 1, 8, 50f, 0.7f);
+            player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"), new Vector2(0, 0), 100, 3, 0, 2, 4, 50f, 0.7f);
             enemy = new Enemy[2];          
             enemy[0] = new Enemy(Content.Load<Texture2D>("Images/Player/Player_Run"), new Vector2(800, 200), 300, 3, 0, 1, 6, 50f, 0.7f);
             enemy[1] = new Enemy(Content.Load<Texture2D>("Images/Player/Player_SlashDown"), new Vector2(800, 200), 300, 3, 0, 1, 6, 50f, 0.7f);
