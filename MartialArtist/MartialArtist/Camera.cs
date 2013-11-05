@@ -20,7 +20,7 @@ namespace MartialArtist
 
         public void Update(GameTime gameTime, Player player)
         {
-            centre = new Vector2(player._vt2_position.X + (player._i_width / 2) - 460, 0);
+            centre = new Vector2(player._vt2_position.X + (player._i_width / 2) - 460, 150);
             transform = Matrix .CreateScale (new Vector3 (1,1,0)) * Matrix .CreateTranslation(new Vector3 (-centre .X,-centre .Y,0));
 
             if (player._vt2_position.X < -500)

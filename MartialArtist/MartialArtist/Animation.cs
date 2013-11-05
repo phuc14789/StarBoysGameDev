@@ -57,12 +57,17 @@ namespace MartialArtist
             _f_scale = scale;
             _vt2_position = position;
 
+            calculateFrame();
+
+            animationCharacter();
+        }
+
+        public void calculateFrame()
+        {
             //Calculate variable
             _i_totalFrame = _i_Rows * _i_Columns;
             _i_width = _t_Image.Width / _i_Columns;
             _i_heigth = _t_Image.Height / _i_Rows;
-
-            animationCharacter();
         }
 
         public void animationCharacter()
@@ -73,21 +78,26 @@ namespace MartialArtist
 
             //Update frame
             _rect_sourceRectangle = new Rectangle(_i_width * column, _i_heigth * row, _i_width, _i_heigth);
-        }        
+        }
 
-        ///khai bao ham Update
-        public virtual void Update(GameTime gameTime)
+        public void moveFrame(GameTime gameTime)
         {
             //Moving frame of character
             _f_elapse += (float)gameTime.ElapsedGameTime.Milliseconds;
             if (_f_elapse >= _f_delay)
             {
-                if (_i_currentFrame >= _i_totalFrame -1)
+                if (_i_currentFrame >= _i_totalFrame - 1)
                     _i_currentFrame = 0;
                 else
                     _i_currentFrame++;
                 _f_elapse = 0;
             }
+        }
+
+        ///khai bao ham Update
+        public virtual void Update(GameTime gameTime, ContentManager Content)
+        {
+            moveFrame(gameTime);
             //animationCharacter();
             //_rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _i_width, _i_heigth); -->Khong can?
         }       

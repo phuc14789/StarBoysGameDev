@@ -247,13 +247,13 @@ namespace MartialArtist
                 }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, ContentManager Content)
         {
             //f_MoveEnemy(gameTime);
 
 
 
-            base.Update(gameTime);
+            base.Update(gameTime, Content);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
