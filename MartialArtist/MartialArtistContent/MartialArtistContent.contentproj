@@ -74,13 +74,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Player\Player_SlashDown.png">
-      <Name>Player_SlashDown</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Images\Player\Player_SlashUp.png">
       <Name>Player_SlashUp</Name>
       <Importer>TextureImporter</Importer>
@@ -121,6 +114,23 @@
     </Compile>
     <Compile Include="Images\Player\Player_SlashUpDown.png">
       <Name>Player_SlashUpDown</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Player\Player_SlashDown_p1.png">
+      <Name>Player_SlashDown_p1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\Player\Player_SlashUp_F.png">
+      <Name>Player_SlashUp_F</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\Player\Player_SlashUp_p1.png">
+      <Name>Player_SlashUp_p1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

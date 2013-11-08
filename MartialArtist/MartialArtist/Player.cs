@@ -131,7 +131,7 @@ namespace MartialArtist
         public void SlashDownSkill(ContentManager Content)
         {
 
-            _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashDown");
+            _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashUpDown");
             _i_Rows = 3;
             _i_Columns = 4;
             _f_delay = 40f;
