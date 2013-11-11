@@ -74,13 +74,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Player\Player_SlashUp.png">
-      <Name>Player_SlashUp</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Images\Player\Player_Standing.png">
       <Name>Player_Standing</Name>
       <Importer>TextureImporter</Importer>
@@ -88,8 +81,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Player\Player_JumpSlashDown.png">
-      <Name>Player_JumpSlashDown</Name>
+    <Compile Include="Images\Player\Player_JumpSlashDown_F.png">
+      <Name>Player_JumpSlashDown_F</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -202,6 +195,27 @@
     </Compile>
     <Compile Include="Images\Enemy\Boss\Boss_walk .png">
       <Name>Boss_walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Player\Player_JumpSlashDown_p1.png">
+      <Name>Player_JumpSlashDown_p1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Enemy\healthBar.png">
+      <Name>healthBar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Background\Level1\Level1.png">
+      <Name>Level1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -39,6 +39,13 @@ namespace MartialArtist
    
         public  Color[] textureData;
 
+        //Health Bar for Enemy
+        Texture2D healthbar;
+        Rectangle rectHealthBar;
+        int curHealth;
+        float healthPercentage;
+        float visibleHealth;
+
         public GraphicsDevice G_GraphicsDevice
         {
             get { return _g_GraphicsDevice; }
@@ -101,11 +108,13 @@ namespace MartialArtist
 
         public bool Collision = false;
 
-        public Enemy(Texture2D enemy, Vector2 position, int health, int damage, int currentFrame, int rows, int columns, float delay, float scale) 
+        public Enemy(Texture2D enemy,ContentManager Content, Vector2 position, int health, int damage, int currentFrame, int rows, int columns, float delay, float scale) 
             : base(enemy , position, currentFrame , rows , columns , delay , scale)           
         {
             //Health of enemy
             _i_Heatlh = health;
+            curHealth = health;
+            healthbar = Content.Load<Texture2D>("Images/Enemy/healthBar");
 
             //Damage of enemy
             _i_Damage = damage;
@@ -361,14 +370,12 @@ namespace MartialArtist
             }          
         }
 
-        public int X, Y;
-
         /// <summary>
         /// Enemy di chuyển xung quanh nhân vật
         /// </summary>
         /// <param name="X"> X : Tọa độ Player</param>
         /// <param name="Y"> Y : Tọa độ Player</param>
-        public void f_MoveAroundPlayer(GameTime gameTime, ContentManager Content)
+        public void f_MoveAroundPlayer(GameTime gameTime, ContentManager Content, int X, int Y)
         {
             // Tạo tốc độ cho Enemy         
 
@@ -430,15 +437,18 @@ namespace MartialArtist
 
         public override void Update(GameTime gameTime, ContentManager Content)
         {
-            //f_MoveEnemy(gameTime);
-
-            f_MoveAroundPlayer(gameTime, Content);           
+            //Calculate health of enemy
+            healthPercentage = (float)curHealth / (float)_i_Heatlh;
+            visibleHealth = healthbar.Width * healthPercentage;
+            rectHealthBar = new Rectangle(0, 0, (int)visibleHealth, healthbar.Height);  
 
             base.Update(gameTime, Content);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
-        {            
+        {
+            //Draw Health Bar of Enemy
+            spriteBatch.Draw(healthbar, _vt2_position + new Vector2(152, 80), rectHealthBar, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
             base.Draw(spriteBatch);            
         }
     }

@@ -39,8 +39,8 @@ namespace MartialArtist
             Content.RootDirectory = "Content";
 
             //Screen size
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 960;
+            graphics.PreferredBackBufferHeight = 576;
 
             //Add Mouse
             IsMouseVisible = true;
