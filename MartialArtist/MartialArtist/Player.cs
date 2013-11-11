@@ -26,56 +26,83 @@ namespace MartialArtist
         bool jump = false;
         float time;
 
+
+        //time
+
+        KeyboardState key;
         //Animation State
         ActionState curAction = ActionState.Standing;
         enum ActionState
         {
             Standing,
-            SlashDownSkill,
+            Skill1,//Phim J
+            Skill2,//Phim K
+            Skill3,//Phim L
         }
 
-        public Player(Texture2D player, Vector2 position, int health, int life, int currentFrame, int rows, int columns,float delay,float scale) : base(player ,position, currentFrame ,rows ,columns ,delay,scale )
+        public Player(Texture2D player, Vector2 position, int health, int life, int currentFrame, int rows, int columns, float delay, float scale)
+            : base(player, position, currentFrame, rows, columns, delay, scale)
         {
             this.health = health;
             this.life = life;
 
-            textureData = new Color[player.Width  * player .Height];
+            textureData = new Color[player.Width * player.Height];
             player.GetData(textureData);
         }
 
         public override void Update(GameTime gameTime, ContentManager Content)
         {
-            characterControl(gameTime, Content);      
+            characterControl(gameTime, Content);
         }
 
-        public void characterControl(GameTime gameTime,ContentManager Content)
+        public void characterControl(GameTime gameTime, ContentManager Content)
         {
-            KeyboardState key = Keyboard.GetState();
-            KeyboardState preKey = Keyboard.GetState();
+            key = Keyboard.GetState();
 
             //Move to left or right
             if (curAction == ActionState.Standing)
             {
                 if (key.IsKeyDown(Keys.D))
                 {
-                    Walk(Content);
-                    velocity.X = moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    moveFrame(gameTime);
-                    animationCharacter();
-                    flip = SpriteEffects.None;
+                    if (key.IsKeyDown(Keys.D) && key.IsKeyDown(Keys.LeftShift))
+                    {
+                        Run(Content);
+                        velocity.X = 2 * moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        moveFrame(gameTime);
+                        animationCharacter();
+                        flip = SpriteEffects.None;
+                    }
+                    else
+                    {
+                        Walk(Content);
+                        velocity.X = moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        moveFrame(gameTime);
+                        animationCharacter();
+                        flip = SpriteEffects.None;
+                    }
                 }
+
                 else if (key.IsKeyDown(Keys.A))
                 {
-                    Walk(Content);
-                    velocity.X = -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    moveFrame(gameTime);
-                    animationCharacter();
-                    flip = SpriteEffects.FlipHorizontally;
-
+                    if (key.IsKeyDown(Keys.A) && key.IsKeyDown(Keys.LeftShift))
+                    {
+                        Run(Content);
+                        velocity.X = 2 * -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        moveFrame(gameTime);
+                        animationCharacter();
+                        flip = SpriteEffects.FlipHorizontally;
+                    }
+                    else
+                    {
+                        Walk(Content);
+                        velocity.X = -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        moveFrame(gameTime);
+                        animationCharacter();
+                        flip = SpriteEffects.FlipHorizontally;
+                    }
                 }
                 else
                 {
-                    _i_currentFrame = 0;
                     velocity.X = 0;
                     Standing(Content);
                     moveFrame(gameTime);
@@ -84,16 +111,16 @@ namespace MartialArtist
                 }
             }
 
-            //Slash DOWN ACTION
+            //SlashDownSkill //SlashDownCombo
             if (key.IsKeyDown(Keys.J))
             {
-                curAction = ActionState.SlashDownSkill;
+                curAction = ActionState.Skill1;
             }
 
-            if (curAction == ActionState.SlashDownSkill)
+            if (curAction == ActionState.Skill1)
             {
                 time += (float)gameTime.ElapsedGameTime.Milliseconds;
-                SlashDownSkill(Content);
+                SlashDownSkill(Content);//SlashDownSkill //SlashDownCombo
                 if (time >= _f_delay)
                 {
                     if (_i_currentFrame < _i_totalFrame - 1)
@@ -105,12 +132,65 @@ namespace MartialArtist
                         _i_currentFrame = 0;
                         Standing(Content);
                         curAction = ActionState.Standing;
-
                     }
                     time = 0;
                 }
                 animationCharacter();
+            }
 
+            //SlashUpSkill //SlashUpCombo
+            if (key.IsKeyDown(Keys.K))
+            {
+                curAction = ActionState.Skill2;
+            }
+
+            if (curAction == ActionState.Skill2)
+            {
+                time += (float)gameTime.ElapsedGameTime.Milliseconds;
+                SlashUpSkill(Content); //SlashUpSkill //SlashUpCombo
+                if (time >= _f_delay)
+                {
+                    if (_i_currentFrame < _i_totalFrame - 1)
+                    {
+                        _i_currentFrame++;
+                    }
+                    else
+                    {
+                        _i_currentFrame = 0;
+                        Standing(Content);
+                        curAction = ActionState.Standing;
+                    }
+                    time = 0;
+                }
+                animationCharacter();
+            }
+
+
+            //JumpSlashSkill //JumpSlashCombo
+            if (key.IsKeyDown(Keys.L))
+            {
+                curAction = ActionState.Skill3;
+            }
+
+            if (curAction == ActionState.Skill3)
+            {
+                time += (float)gameTime.ElapsedGameTime.Milliseconds;
+                JumpSlashSkill(Content);//JumpSlashSkill //JumpSlashCombo
+                if (time >= _f_delay)
+                {
+                    if (_i_currentFrame < _i_totalFrame - 1)
+                    {
+                        _i_currentFrame++;
+                    }
+                    else
+                    {
+                        _i_currentFrame = 0;
+                        Standing(Content);
+                        curAction = ActionState.Standing;
+                    }
+                    time = 0;
+                }
+                animationCharacter();
             }
 
             //Jump
@@ -128,16 +208,78 @@ namespace MartialArtist
             jump = _vt2_position.Y >= 200;
             if (jump)
                 _vt2_position.Y = 200;
-        
+        }
+        /// <summary>
+        /// Fall: va cham voi enemy bi te'
+        /// Run: chay
+        /// 3 skill thuong
+        /// 3 combo
+        /// </summary>
+        /// <param name="Content">Load hinh anh</param>
+        public void Fall(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Player/Player_Fall");
+            _i_Rows = 3;
+            _i_Columns = 5;
+            _f_delay = 40f;
+            calculateFrame();
+        }
+
+        public void Run(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Player/Player_Run");
+            _i_Rows = 1;
+            _i_Columns = 6;
+            _f_delay = 40f;
+            calculateFrame();
         }
 
         public void SlashDownSkill(ContentManager Content)
         {
-
+            _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashDown_p1");
+            _i_Rows = 1;
+            _i_Columns = 6;
+            _f_delay = 60f;
+            calculateFrame();
+        }
+        public void SlashDownCombo(ContentManager Content)
+        {
             _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashUpDown");
             _i_Rows = 3;
             _i_Columns = 4;
-            _f_delay = 40f;
+            _f_delay = 60f;
+            calculateFrame();
+        }
+        public void SlashUpSkill(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashUp_p1");
+            _i_Rows = 1;
+            _i_Columns = 4;
+            _f_delay = 60f;
+            calculateFrame();
+        }
+        public void SlashUpCombo(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashUp_F");
+            _i_Rows = 2;
+            _i_Columns = 4;
+            _f_delay = 60f;
+            calculateFrame();
+        }
+        public void JumpSlashSkill(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Player/Player_JumpSlashDown_p1");
+            _i_Rows = 1;
+            _i_Columns = 3;
+            _f_delay = 100f;
+            calculateFrame();
+        }
+        public void JumpSlashCombo(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Player/Player_JumpSlashDown_F");
+            _i_Rows = 3;
+            _i_Columns = 3;
+            _f_delay = 80f;
             calculateFrame();
         }
 
@@ -148,6 +290,7 @@ namespace MartialArtist
             _i_Columns = 4;
             _f_delay = 50f;
             calculateFrame();
+
         }
 
         public void Walk(ContentManager Content)
