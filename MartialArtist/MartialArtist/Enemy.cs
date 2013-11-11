@@ -81,6 +81,26 @@ namespace MartialArtist
             set { _i_Heatlh = value; }
         }
 
+
+        public ActionState curAction = ActionState.Walk;
+        public enum ActionState
+        {
+            Walk,
+            Kick,
+            Punch,
+            Fall,
+        }
+
+
+        public Huong huong = Huong.Left;
+        public enum Huong
+        {
+            Left,
+            Right,
+        }
+
+        public bool Collision = false;
+
         public Enemy(Texture2D enemy, Vector2 position, int health, int damage, int currentFrame, int rows, int columns, float delay, float scale) 
             : base(enemy , position, currentFrame , rows , columns , delay , scale)           
         {
@@ -93,9 +113,16 @@ namespace MartialArtist
             // Random vị trí enemy xuất hiện
             _vt2_position = f_RandomEnemy(new Vector2(0, 100), new Vector2(700, 800), 210);
 
+
+            //_vt2_position = new Vector2(0, 200);
+
             //
             textureData = new Color[enemy.Width * enemy.Height];
             enemy.GetData(textureData);
+
+            Random rd = new Random();
+            _f_Speed = rd.Next(1, 5);
+            
         }        
 
         public void Initialize()
@@ -106,7 +133,6 @@ namespace MartialArtist
             _b_Life = true;                                                                                              
 
         }
-
 
         // Hàm này 
 
@@ -206,6 +232,17 @@ namespace MartialArtist
             return (float)Math.Sqrt((pos1.X - pos2.X) * (pos1.X - pos2.X) + (pos1.Y - pos2.Y) * (pos1.Y - pos2.Y));
         }
 
+        /// <summary>
+        /// Hàm này tính khoảng cách giữa Enemy với player
+        /// </summary>
+        /// <param name="X1">Tọa độ Enemy or Player</param>
+        /// <returns>Trả về khoảng cách</returns>
+        public float f_Distand(float X1)
+        {
+            return Math.Abs(_vt2_position.X - X1);
+        }
+
+
         public float _Timer = 0;
         public float _Delay = 20;
 
@@ -222,43 +259,186 @@ namespace MartialArtist
 
         }
 
+        public void f_UpdateWalk(GameTime gameTime, ContentManager Content)
+        {
+            if (curAction == ActionState.Walk)
+            {
+                flip = (huong == Huong.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                f_Walk(Content);
+                moveFrame(gameTime);
+                animationCharacter();
+            }
+        }
+
+        public void f_UpdateKick(GameTime gameTime, ContentManager Content)
+        {
+            if (curAction == ActionState.Kick)
+            {
+                flip = (huong == Huong.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                f_Kick(Content);
+                moveFrame(gameTime);
+                animationCharacter();
+            }
+        }
+
+        public void f_UpdateFall(GameTime gameTime, ContentManager Content)
+        {
+            if (curAction == ActionState.Fall)
+            {
+                flip = (huong == Huong.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                f_Fall(Content);
+                moveFrame(gameTime);
+                animationCharacter();
+            }
+        }
+
+        public void f_UpdatePunch(GameTime gameTime, ContentManager Content)
+        {
+            if (curAction == ActionState.Punch)
+            {
+                flip = (huong == Huong.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                f_Punch(Content);
+                moveFrame(gameTime);
+                animationCharacter();
+            }
+        }
+
+        float time;
+
+        public void f_UpdateEnemy(GameTime gameTime, ContentManager Content, Rectangle recplayer)
+        {
+            //if (curAction == ActionState.Walk)
+            //{
+
+            //    if (_rect_destinationRectangle.Intersects(recplayer))
+            //        curAction = ActionState.Kick;
+            //    else
+            //        curAction = ActionState.Walk;
+
+            //    f_UpdateKick(gameTime, Content);
+
+            //    f_UpdateWalk(gameTime, Content);
+
+            //}
+
+            time += (float)gameTime.ElapsedGameTime.Milliseconds;
+
+            if (_rect_destinationRectangle.Intersects(recplayer) == true)
+            {
+                if (time < 1000) // _i_currentFrame <= _i_totalFrame - 1 && 
+                {
+                    f_Kick(Content);
+                    Collision = true;
+                    moveFrame(gameTime);
+                    animationCharacter();
+
+                }
+
+                if ( time >= 1000)
+                {
+                    f_Walk(Content);
+                    Collision = false;
+
+                    moveFrame(gameTime);
+                    animationCharacter();
+
+                    if (time == 2000)
+                        time = 0;
+                }
+              
+            }
+            else
+            {                
+                    f_Walk(Content);
+                    Collision = false;
+
+                    moveFrame(gameTime);
+                    animationCharacter();               
+            }          
+        }
+
+        public int X, Y;
+
         /// <summary>
         /// Enemy di chuyển xung quanh nhân vật
         /// </summary>
         /// <param name="X"> X : Tọa độ Player</param>
         /// <param name="Y"> Y : Tọa độ Player</param>
-        public void f_MoveAroundPlayer(int X, int Y)
+        public void f_MoveAroundPlayer(GameTime gameTime, ContentManager Content)
         {
-            // Tạo tốc độ cho Enemy
-            Random rd = new Random();
-            _f_Speed = rd.Next(1, 5);
+            // Tạo tốc độ cho Enemy         
 
-
-            if (_vt2_position.X < X)
+            if (_vt2_position.X + 80 < X)
             {
                 _vt2_position.X += _f_Speed;
                 flip = SpriteEffects.None;
+
+                moveFrame(gameTime);
+                animationCharacter();
             }
             else
-                if (_vt2_position.X > X)
+                if (_vt2_position.X - 80 > X)
                 {
                     _vt2_position.X -= _f_Speed;
                     flip = SpriteEffects.FlipHorizontally;
-                }
+                    moveFrame(gameTime);
+                    animationCharacter();
+                }       
+        }
+
+        public void f_Walk(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_walk");
+            _i_Rows = 3;
+            _i_Columns = 5;
+            _f_delay = 50f;
+            calculateFrame();
+        }
+
+        public void f_Fall(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_fall");
+            _i_Rows = 2;
+            _i_Columns = 4;
+            _f_delay = 40f;
+            calculateFrame();
+        }
+
+        public void f_Kick(ContentManager Content)
+        {
+
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_kick");
+            _i_Rows = 2;
+            _i_Columns = 4;
+            _f_delay = 100f;
+            calculateFrame();
+        }
+
+        public void f_Punch(ContentManager Content)
+        {
+
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_punch");
+            _i_Rows = 2;
+            _i_Columns = 6;
+            _f_delay = 40f;
+            calculateFrame();
         }
 
         public override void Update(GameTime gameTime, ContentManager Content)
         {
             //f_MoveEnemy(gameTime);
 
-
+            f_MoveAroundPlayer(gameTime, Content);           
 
             base.Update(gameTime, Content);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
-        {
-            
+        {            
             base.Draw(spriteBatch);            
         }
     }

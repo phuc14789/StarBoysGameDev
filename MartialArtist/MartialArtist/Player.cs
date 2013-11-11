@@ -14,7 +14,7 @@ namespace MartialArtist
 {
     public class Player : Animation
     {
-        int health;
+        public int health;
         int life;
         public Color[] textureData;
 
@@ -78,6 +78,9 @@ namespace MartialArtist
                     _i_currentFrame = 0;
                     velocity.X = 0;
                     Standing(Content);
+                    moveFrame(gameTime);
+                    animationCharacter();
+                    flip = SpriteEffects.None;
                 }
             }
 

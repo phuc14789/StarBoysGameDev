@@ -32,9 +32,12 @@ namespace MartialArtist
         public int _i_width;
         public int _i_heigth;
 
+        public int _destWidth = 120;
+        public int _destHeight = 120;
+
         //12.13 khai bao bien khung hinh va diem den cua khung hinh
         public Rectangle _rect_sourceRectangle;
-        //private Rectangle _rect_destinationRectangle;
+        public Rectangle _rect_destinationRectangle;
 
         protected float _f_elapse;
         //Speed of frame
@@ -78,6 +81,7 @@ namespace MartialArtist
 
             //Update frame
             _rect_sourceRectangle = new Rectangle(_i_width * column, _i_heigth * row, _i_width, _i_heigth);
+            _rect_destinationRectangle = new Rectangle((int)_vt2_position.X, (int)_vt2_position.Y, _destWidth, _destHeight);
         }
 
         public void moveFrame(GameTime gameTime)
