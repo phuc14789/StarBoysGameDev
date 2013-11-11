@@ -395,7 +395,7 @@ namespace MartialArtist
             _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_walk");
             _i_Rows = 3;
             _i_Columns = 5;
-            _f_delay = 50f;
+            _f_delay = 100f;
             calculateFrame();
         }
 
