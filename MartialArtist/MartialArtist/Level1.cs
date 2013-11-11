@@ -46,7 +46,7 @@ namespace MartialArtist
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);
 
             //Draw background Level1
-            spriteBatch.Draw(background, Vector2.Zero, new Rectangle(0, 0, 3000, 720), Color.White, 0, Vector2.Zero, 0.83f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(background, new Vector2 (0,-50), new Rectangle(0, 0, 3000, 720), Color.White, 0, Vector2.Zero, 0.83f, SpriteEffects.None, 0f);
 
             //Draw Every Enemy in Level
             foreach (Enemy e in enemy)
