@@ -15,7 +15,7 @@ namespace MartialArtist
     public class Player : Animation
     {
         public int health;
-        int life;
+        int skillCombo;
         public Color[] textureData;
 
         //Varible for control character
@@ -26,8 +26,22 @@ namespace MartialArtist
         bool jump = false;
         float time;
 
+        //Health Bar for Player
+        public Texture2D healthbar;     
+        public Rectangle rectHealthBar;        
+        public int curHealth;
+        float healthPercentage;
+        float visibleHealth;
 
-        //time
+        //Combo Bar
+        public Texture2D comboBar;
+        public Rectangle rectComboBar;
+        public int curCombo;
+        float comboPercentage;
+        float visibleCombo;
+
+        //Combo
+        public int combo = 99;//test so combo
 
         KeyboardState key;
         //Animation State
@@ -38,21 +52,39 @@ namespace MartialArtist
             Skill1,//Phim J
             Skill2,//Phim K
             Skill3,//Phim L
+            Combo1,//Phim U
+            Combo2,//Phim I
+            Combo3,//Phim O
         }
 
-        public Player(Texture2D player, Vector2 position, int health, int life, int currentFrame, int rows, int columns, float delay, float scale)
+        public Player(Texture2D player,ContentManager Content, Vector2 position, int health, int skillCombo, int currentFrame, int rows, int columns, float delay, float scale)
             : base(player, position, currentFrame, rows, columns, delay, scale)
         {
             this.health = health;
-            this.life = life;
+            this.skillCombo = skillCombo;
 
-            textureData = new Color[player.Width * player.Height];
-            player.GetData(textureData);
+            //Health of enemy
+            curHealth = health;
+            curCombo = skillCombo;
+            healthbar = Content.Load<Texture2D>("Images/HealthBar/mau");
+            comboBar = Content.Load<Texture2D>("Images/HealthBar/combo");
+            
         }
 
         public override void Update(GameTime gameTime, ContentManager Content)
-        {
+        {         
+            //Calculate health of enemy
+            healthPercentage = (float)curHealth / (float)health;
+            visibleHealth = healthbar.Width * healthPercentage;
+            rectHealthBar = new Rectangle(0, 0, (int)visibleHealth, healthbar.Height);  
+            
+            //Calculate Skill Combo
+            comboPercentage = (float)curCombo / (float)skillCombo;
+            visibleCombo = comboBar.Width * comboPercentage;
+            rectComboBar = new Rectangle(0, 0, (int)visibleCombo, comboBar.Height);
+
             characterControl(gameTime, Content);
+
         }
 
         public void characterControl(GameTime gameTime, ContentManager Content)
@@ -107,7 +139,7 @@ namespace MartialArtist
                     Standing(Content);
                     moveFrame(gameTime);
                     animationCharacter();
-                    flip = SpriteEffects.None;
+                    //flip = SpriteEffects.None;
                 }
             }
 
@@ -132,6 +164,8 @@ namespace MartialArtist
                         _i_currentFrame = 0;
                         Standing(Content);
                         curAction = ActionState.Standing;
+                        if (curAction == ActionState.Standing)//dieu kien 
+                            curCombo = curCombo + 5;// de tru combo
                     }
                     time = 0;
                 }
@@ -159,6 +193,8 @@ namespace MartialArtist
                         _i_currentFrame = 0;
                         Standing(Content);
                         curAction = ActionState.Standing;
+                        if (curAction == ActionState.Standing)//dieu kien 
+                            curCombo = curCombo + 5;// de tru combo
                     }
                     time = 0;
                 }
@@ -187,12 +223,101 @@ namespace MartialArtist
                         _i_currentFrame = 0;
                         Standing(Content);
                         curAction = ActionState.Standing;
+                        if (curAction == ActionState.Standing)//dieu kien 
+                            curCombo = curCombo + 5;// de tru combo
                     }
                     time = 0;
                 }
                 animationCharacter();
             }
 
+
+            //Combo1
+            if (key.IsKeyDown(Keys.U) && curCombo >= 30)
+            {
+                curAction = ActionState.Combo1;
+            }
+
+            if (curAction == ActionState.Combo1)
+            {
+                time += (float)gameTime.ElapsedGameTime.Milliseconds;
+                JumpSlashCombo(Content);//JumpSlashCombo
+                if (time >= _f_delay)
+                {
+                    if (_i_currentFrame < _i_totalFrame - 1)
+                    {
+                        _i_currentFrame++;
+                    }
+                    else
+                    {
+                        _i_currentFrame = 0;
+                        Standing(Content);
+                        curAction = ActionState.Standing;
+                        if (curAction == ActionState.Standing)//dieu kien 
+                            curCombo = curCombo - 30;// de tru combo
+                    }
+                    time = 0;
+                }
+                animationCharacter();
+            }
+
+            //Combo2
+            if (key.IsKeyDown(Keys.I) && curCombo >= 60)
+            {
+                curAction = ActionState.Combo2;
+            }
+
+            if (curAction == ActionState.Combo2)
+            {
+                time += (float)gameTime.ElapsedGameTime.Milliseconds;
+                SlashDownCombo(Content);//SlashDownCombo
+                if (time >= _f_delay)
+                {
+                    if (_i_currentFrame < _i_totalFrame - 1)
+                    {
+                        _i_currentFrame++;
+                    }
+                    else
+                    {
+                        _i_currentFrame = 0;
+                        Standing(Content);
+                        curAction = ActionState.Standing;
+                        if (curAction == ActionState.Standing)//dieu kien 
+                            curCombo = curCombo - 60;// de tru combo
+                    }
+                    time = 0;
+                }
+                animationCharacter();
+            }
+
+            //Combo3
+            if (key.IsKeyDown(Keys.I) && curCombo == 100)
+            {
+                curAction = ActionState.Combo3;
+            }
+
+            if (curAction == ActionState.Combo3)
+            {
+                time += (float)gameTime.ElapsedGameTime.Milliseconds;
+                SlashUpCombo(Content);//SlashUpCombo
+                if (time >= _f_delay)
+                {
+                    if (_i_currentFrame < _i_totalFrame - 1)
+                    {
+                        _i_currentFrame++;
+                    }
+                    else
+                    {
+                        _i_currentFrame = 0;
+                        Standing(Content);
+                        curAction = ActionState.Standing;
+                        if (curAction == ActionState.Standing)//dieu kien 
+                            curCombo = curCombo - 100;// de tru combo
+                    }
+                    time = 0;
+                }
+                animationCharacter();
+            }
             //Jump
             if (key.IsKeyDown(Keys.W) && jump)
             {
@@ -242,6 +367,7 @@ namespace MartialArtist
             _f_delay = 60f;
             calculateFrame();
         }
+
         public void SlashDownCombo(ContentManager Content)
         {
             _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashUpDown");
@@ -250,6 +376,7 @@ namespace MartialArtist
             _f_delay = 60f;
             calculateFrame();
         }
+
         public void SlashUpSkill(ContentManager Content)
         {
             _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashUp_p1");
@@ -258,6 +385,7 @@ namespace MartialArtist
             _f_delay = 60f;
             calculateFrame();
         }
+
         public void SlashUpCombo(ContentManager Content)
         {
             _t_Image = Content.Load<Texture2D>("Images/Player/Player_SlashUp_F");
@@ -266,6 +394,7 @@ namespace MartialArtist
             _f_delay = 60f;
             calculateFrame();
         }
+
         public void JumpSlashSkill(ContentManager Content)
         {
             _t_Image = Content.Load<Texture2D>("Images/Player/Player_JumpSlashDown_p1");
@@ -274,6 +403,7 @@ namespace MartialArtist
             _f_delay = 100f;
             calculateFrame();
         }
+
         public void JumpSlashCombo(ContentManager Content)
         {
             _t_Image = Content.Load<Texture2D>("Images/Player/Player_JumpSlashDown_F");
@@ -303,7 +433,7 @@ namespace MartialArtist
         }
 
         public override void Draw(SpriteBatch spriteBatch)
-        {
+        {            
             base.Draw(spriteBatch);
         }
     }

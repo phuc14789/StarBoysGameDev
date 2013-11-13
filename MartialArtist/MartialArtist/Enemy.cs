@@ -32,12 +32,10 @@ namespace MartialArtist
         private int _i_Damage; 
 
         // Máu của Enemy
-        private int _i_Heatlh; 
+        private int _i_Health; 
 
         // Cho Enemy xuất hiện ngẫu nhiên
         private Random _r_Random;     
-   
-        public  Color[] textureData;
 
         //Health Bar for Enemy
         Texture2D healthbar;
@@ -84,8 +82,8 @@ namespace MartialArtist
 
         public int I_Heatlh
         {
-            get { return _i_Heatlh; }
-            set { _i_Heatlh = value; }
+            get { return _i_Health; }
+            set { _i_Health = value; }
         }
 
 
@@ -112,7 +110,7 @@ namespace MartialArtist
             : base(enemy , position, currentFrame , rows , columns , delay , scale)           
         {
             //Health of enemy
-            _i_Heatlh = health;
+            _i_Health = health;
             curHealth = health;
             healthbar = Content.Load<Texture2D>("Images/Enemy/healthBar");
 
@@ -121,13 +119,6 @@ namespace MartialArtist
 
             // Random vị trí enemy xuất hiện
             _vt2_position = f_RandomEnemy(new Vector2(0, 100), new Vector2(700, 800), 210);
-
-
-            //_vt2_position = new Vector2(0, 200);
-
-            //
-            textureData = new Color[enemy.Width * enemy.Height];
-            enemy.GetData(textureData);
 
             Random rd = new Random();
             _f_Speed = rd.Next(1, 5);
@@ -438,7 +429,7 @@ namespace MartialArtist
         public override void Update(GameTime gameTime, ContentManager Content)
         {
             //Calculate health of enemy
-            healthPercentage = (float)curHealth / (float)_i_Heatlh;
+            healthPercentage = (float)curHealth / (float)_i_Health;
             visibleHealth = healthbar.Width * healthPercentage;
             rectHealthBar = new Rectangle(0, 0, (int)visibleHealth, healthbar.Height);  
 
