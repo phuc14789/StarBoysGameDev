@@ -40,7 +40,7 @@ namespace MartialArtist
         //Health Bar for Enemy
         Texture2D healthbar;
         Rectangle rectHealthBar;
-        int curHealth;
+        public int curHealth;
         float healthPercentage;
         float visibleHealth;
 
@@ -96,6 +96,8 @@ namespace MartialArtist
             Fall,
         }
 
+        public bool flagCollection = true;
+
 
         public Huong huong = Huong.Left;
         public enum Huong
@@ -118,10 +120,15 @@ namespace MartialArtist
             _i_Damage = damage;
 
             // Random vị trí enemy xuất hiện
-            _vt2_position = f_RandomEnemy(new Vector2(0, 100), new Vector2(700, 800), 210);
+            // Vị trí xuất hiện từ màn hình đến vị trí X của player - 500 và từ vị trí X player + 500
+            //_vt2_position = f_RandomEnemy(new Vector2(0, Level.player._vt2_position.X - 200), new Vector2(Level.player._vt2_position.X + 200, 3000), 210); // lấy cái này nhưng xét sau
+
+            _vt2_position = f_RandomEnemy(new Vector2(0, 300), new Vector2(700, 800), 210);
 
             Random rd = new Random();
             _f_Speed = rd.Next(1, 5);
+
+            _b_Life = true;
             
         }        
 
@@ -311,24 +318,17 @@ namespace MartialArtist
 
         public void f_UpdateEnemy(GameTime gameTime, ContentManager Content, Rectangle recplayer)
         {
-            //if (curAction == ActionState.Walk)
-            //{
 
-            //    if (_rect_destinationRectangle.Intersects(recplayer))
-            //        curAction = ActionState.Kick;
-            //    else
-            //        curAction = ActionState.Walk;
-
-            //    f_UpdateKick(gameTime, Content);
-
-            //    f_UpdateWalk(gameTime, Content);
-
-            //}
 
             time += (float)gameTime.ElapsedGameTime.Milliseconds;
 
-            if (_rect_destinationRectangle.Intersects(recplayer) == true)
+            // Lấy tọa độ Enemy (Tọa độ này sẽ dời khác xa so với vẽ)
+            _vt2_PositionEnemy = new Vector2(_vt2_position.X + 135, _vt2_position.Y + 90);
+
+            // Nếu 2 rectangle va chạm thì
+            if (f_Rectangle_dest(_vt2_PositionEnemy).Intersects(recplayer) == true) //_rect_destinationRectangle
             {
+                // Enemy đánh 
                 if (time < 1000) // _i_currentFrame <= _i_totalFrame - 1 && 
                 {
                     f_Kick(Content);
@@ -338,27 +338,29 @@ namespace MartialArtist
 
                 }
 
-                if ( time >= 1000)
+                // Nghĩ nghơi
+                if (time >= 1000)
                 {
-                    f_Walk(Content);
-                    Collision = false;
+                    f_Standing(Content);
+                    Collision = true;
 
                     moveFrame(gameTime);
                     animationCharacter();
 
-                    if (time == 2000)
+                    if (time >= 2000) // sai chổ này :(
                         time = 0;
                 }
-              
+
             }
             else
-            {                
-                    f_Walk(Content);
-                    Collision = false;
+            {
+                // Thực hiện đi bộ
+                f_Walk(Content);
+                Collision = false;
 
-                    moveFrame(gameTime);
-                    animationCharacter();               
-            }          
+                moveFrame(gameTime);
+                animationCharacter();
+            }            
         }
 
         /// <summary>
@@ -370,7 +372,7 @@ namespace MartialArtist
         {
             // Tạo tốc độ cho Enemy         
 
-            if (_vt2_position.X + 80 < X)
+            if (_vt2_position.X + 60 < X)       // 60 là gần đến với vị trí player
             {
                 _vt2_position.X += _f_Speed;
                 flip = SpriteEffects.None;
@@ -379,13 +381,22 @@ namespace MartialArtist
                 animationCharacter();
             }
             else
-                if (_vt2_position.X - 80 > X)
+                if (_vt2_position.X - 60 > X)   // 60 là gần đến với vị trí player
                 {
                     _vt2_position.X -= _f_Speed;
                     flip = SpriteEffects.FlipHorizontally;
                     moveFrame(gameTime);
                     animationCharacter();
                 }       
+        }
+
+        public void f_Standing(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_standing");
+            _i_Rows = 1;
+            _i_Columns = 8;
+            _f_delay = 100f;
+            calculateFrame();
         }
 
         public void f_Walk(ContentManager Content)

@@ -21,19 +21,19 @@ namespace MartialArtist
         public Vector2 _vt2_position;
 
         //6.7 khai bao bien hang va cot
-        protected int _i_Rows;
-        protected int _i_Columns;
+        public int _i_Rows;
+        public int _i_Columns;
 
         //8.9 khai bao bien hinh anh tong va hien tai
-        protected int _i_totalFrame;
-        protected int _i_currentFrame;
+        public int _i_totalFrame;
+        public int _i_currentFrame;
 
         //10.11 khai bao chieu cao va chieu rong
         public int _i_width;
         public int _i_heigth;
 
-        public int _destWidth = 120;
-        public int _destHeight = 120;
+        public int _destWidth = 80;
+        public int _destHeight = 150;
 
         //12.13 khai bao bien khung hinh va diem den cua khung hinh
         public Rectangle _rect_sourceRectangle;
@@ -41,12 +41,19 @@ namespace MartialArtist
 
         protected float _f_elapse;
         //Speed of frame
-        protected float _f_delay;
+        public float _f_delay;
 
         //Scale of image
         protected float _f_scale;
 
         protected SpriteEffects flip = SpriteEffects.None;
+
+        public Rectangle f_Rectangle_dest(Vector2 position)
+        {
+            return new Rectangle((int)position.X, (int)position.Y, _destWidth, _destHeight);
+
+        }
+
         
         ///khai bao ham khoi tao voi 4 bien so
         public Animation(Texture2D texture, Vector2 position, int currentFrame, int rows, int columns,float delay, float scale)

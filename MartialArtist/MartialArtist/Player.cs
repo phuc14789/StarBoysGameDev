@@ -12,6 +12,18 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MartialArtist
 {
+
+    public enum ActionState
+    {
+        Standing,
+        Skill1,//Phim J
+        Skill2,//Phim K
+        Skill3,//Phim L
+        Combo1,//Phim U
+        Combo2,//Phim I
+        Combo3,//Phim O
+    }
+
     public class Player : Animation
     {
         public int health;
@@ -45,16 +57,14 @@ namespace MartialArtist
 
         KeyboardState key;
         //Animation State
-        ActionState curAction = ActionState.Standing;
-        enum ActionState
+        public ActionState curAction = ActionState.Standing;
+
+        // Trạng thái chu7ava chạm
+        public bool flagCollection = false;
+
+        public Rectangle f_Rectangle_srcPlayer(Vector2 position)
         {
-            Standing,
-            Skill1,//Phim J
-            Skill2,//Phim K
-            Skill3,//Phim L
-            Combo1,//Phim U
-            Combo2,//Phim I
-            Combo3,//Phim O
+            return new Rectangle((int)position.X, (int)position.Y, 400, 400);
         }
 
         public Player(Texture2D player,ContentManager Content, Vector2 position, int health, int skillCombo, int currentFrame, int rows, int columns, float delay, float scale)
@@ -291,7 +301,7 @@ namespace MartialArtist
             }
 
             //Combo3
-            if (key.IsKeyDown(Keys.I) && curCombo == 100)
+            if (key.IsKeyDown(Keys.O) && curCombo == 100)
             {
                 curAction = ActionState.Combo3;
             }
