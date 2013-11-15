@@ -11,6 +11,7 @@ namespace MartialArtist
 
     class Level
     {
+
         private LEVELSTATE levelState;
         public LEVELSTATE LevelState
         {
@@ -20,7 +21,10 @@ namespace MartialArtist
 
         protected Camera camera;
         public static Player player;
+        protected Enemy[] enemy;
+
         protected List<Enemy> liEnemy;
+        //protected List<Texture2D> background;
 
         public virtual void Update(GameTime t)
         {
@@ -30,6 +34,8 @@ namespace MartialArtist
         public virtual void Draw(SpriteBatch sp)
         {
 
-        }        
+        }
+
+        
     }
 }

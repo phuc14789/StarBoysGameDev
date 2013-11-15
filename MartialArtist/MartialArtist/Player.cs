@@ -27,6 +27,7 @@ namespace MartialArtist
     public class Player : Animation
     {
         public int health;
+        public int damge;
         int skillCombo;
         public Color[] textureData;
 
@@ -62,16 +63,19 @@ namespace MartialArtist
         // Trạng thái chu7ava chạm
         public bool flagCollection = false;
 
+        float timer_Skill = 0f;
+
         public Rectangle f_Rectangle_srcPlayer(Vector2 position)
         {
             return new Rectangle((int)position.X, (int)position.Y, 400, 400);
         }
 
-        public Player(Texture2D player,ContentManager Content, Vector2 position, int health, int skillCombo, int currentFrame, int rows, int columns, float delay, float scale)
+        public Player(Texture2D player,ContentManager Content, Vector2 position, int health, int damge, int skillCombo, int currentFrame, int rows, int columns, float delay, float scale)
             : base(player, position, currentFrame, rows, columns, delay, scale)
         {
             this.health = health;
             this.skillCombo = skillCombo;
+            this.damge = damge;
 
             //Health of enemy
             curHealth = health;
@@ -83,6 +87,7 @@ namespace MartialArtist
 
         public override void Update(GameTime gameTime, ContentManager Content)
         {         
+
             //Calculate health of enemy
             healthPercentage = (float)curHealth / (float)health;
             visibleHealth = healthbar.Width * healthPercentage;
@@ -100,6 +105,8 @@ namespace MartialArtist
         public void characterControl(GameTime gameTime, ContentManager Content)
         {
             key = Keyboard.GetState();
+
+            timer_Skill += (float)gameTime.ElapsedGameTime.Milliseconds;
 
             //Move to left or right
             if (curAction == ActionState.Standing)
@@ -156,7 +163,10 @@ namespace MartialArtist
             //SlashDownSkill //SlashDownCombo
             if (key.IsKeyDown(Keys.J))
             {
-                curAction = ActionState.Skill1;
+                if (timer_Skill > 00)
+                {
+                    curAction = ActionState.Skill1;
+                }
             }
 
             if (curAction == ActionState.Skill1)
@@ -175,7 +185,10 @@ namespace MartialArtist
                         Standing(Content);
                         curAction = ActionState.Standing;
                         if (curAction == ActionState.Standing)//dieu kien 
+                        {
                             curCombo = curCombo + 5;// de tru combo
+                            timer_Skill = 0f;
+                        }
                     }
                     time = 0;
                 }
@@ -243,7 +256,7 @@ namespace MartialArtist
 
 
             //Combo1
-            if (key.IsKeyDown(Keys.U) && curCombo >= 30)
+            if (key.IsKeyDown(Keys.U) && curCombo >= 20)
             {
                 curAction = ActionState.Combo1;
             }
@@ -251,7 +264,7 @@ namespace MartialArtist
             if (curAction == ActionState.Combo1)
             {
                 time += (float)gameTime.ElapsedGameTime.Milliseconds;
-                JumpSlashCombo(Content);//JumpSlashCombo
+                SlashDownCombo(Content);//JumpSlashCombo
                 if (time >= _f_delay)
                 {
                     if (_i_currentFrame < _i_totalFrame - 1)
@@ -264,7 +277,7 @@ namespace MartialArtist
                         Standing(Content);
                         curAction = ActionState.Standing;
                         if (curAction == ActionState.Standing)//dieu kien 
-                            curCombo = curCombo - 30;// de tru combo
+                            curCombo = curCombo - 20;// de tru combo
                     }
                     time = 0;
                 }
@@ -272,7 +285,7 @@ namespace MartialArtist
             }
 
             //Combo2
-            if (key.IsKeyDown(Keys.I) && curCombo >= 60)
+            if (key.IsKeyDown(Keys.I) && curCombo >= 40)
             {
                 curAction = ActionState.Combo2;
             }
@@ -293,7 +306,7 @@ namespace MartialArtist
                         Standing(Content);
                         curAction = ActionState.Standing;
                         if (curAction == ActionState.Standing)//dieu kien 
-                            curCombo = curCombo - 60;// de tru combo
+                            curCombo = curCombo - 40;// de tru combo
                     }
                     time = 0;
                 }
@@ -301,7 +314,7 @@ namespace MartialArtist
             }
 
             //Combo3
-            if (key.IsKeyDown(Keys.O) && curCombo == 100)
+            if (key.IsKeyDown(Keys.O) && curCombo >= 60)
             {
                 curAction = ActionState.Combo3;
             }
@@ -309,7 +322,7 @@ namespace MartialArtist
             if (curAction == ActionState.Combo3)
             {
                 time += (float)gameTime.ElapsedGameTime.Milliseconds;
-                SlashUpCombo(Content);//SlashUpCombo
+                JumpSlashCombo(Content);//SlashDownCombo
                 if (time >= _f_delay)
                 {
                     if (_i_currentFrame < _i_totalFrame - 1)
@@ -322,12 +335,13 @@ namespace MartialArtist
                         Standing(Content);
                         curAction = ActionState.Standing;
                         if (curAction == ActionState.Standing)//dieu kien 
-                            curCombo = curCombo - 100;// de tru combo
+                            curCombo = curCombo - 60;// de tru combo
                     }
                     time = 0;
                 }
                 animationCharacter();
             }
+
             //Jump
             if (key.IsKeyDown(Keys.W) && jump)
             {

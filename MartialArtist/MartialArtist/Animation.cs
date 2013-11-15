@@ -44,7 +44,7 @@ namespace MartialArtist
         public float _f_delay;
 
         //Scale of image
-        protected float _f_scale;
+        public float _f_scale;
 
         protected SpriteEffects flip = SpriteEffects.None;
 
