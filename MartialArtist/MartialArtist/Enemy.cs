@@ -128,8 +128,7 @@ namespace MartialArtist
             Random rd = new Random();
             _f_Speed = rd.Next(1, 5);
 
-            _b_Life = true;
-            
+            _b_Life = true;            
         }        
 
         public void Initialize()
@@ -137,7 +136,7 @@ namespace MartialArtist
             _r_Random = new Random();                                                                          
 
             // Trạng thái Enemy còn sống           
-            _b_Life = true;                                                                                              
+            _b_Life = true;                                                                                          
 
         }
 
@@ -183,8 +182,6 @@ namespace MartialArtist
                 return new Vector2(number, (number2 - _i_heigth) >= 0 ? number2 - _i_heigth : number2);
             }
         }
-
-
         // Sửa lại
         /// <summary>
         /// Random vị trí enemy từ đâu đến đầu trong map
@@ -249,11 +246,8 @@ namespace MartialArtist
             return Math.Abs(_vt2_position.X - X1);
         }
 
-
         public float _Timer = 0;
         public float _Delay = 20;
-
-
         public void f_MoveEnemy(GameTime gameTime)
         {
             _Timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -263,7 +257,6 @@ namespace MartialArtist
                 _vt2_position.X += _f_Speed;
                 _Timer = 0;
             }
-
         }
 
         public void f_UpdateWalk(GameTime gameTime, ContentManager Content)
@@ -315,11 +308,8 @@ namespace MartialArtist
         }
 
         float time;
-
         public void f_UpdateEnemy(GameTime gameTime, ContentManager Content, Rectangle recplayer)
         {
-
-
             time += (float)gameTime.ElapsedGameTime.Milliseconds;
 
             // Lấy tọa độ Enemy (Tọa độ này sẽ dời khác xa so với vẽ)
