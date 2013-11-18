@@ -119,19 +119,15 @@ namespace MartialArtist
                 // Sử dụng Skill thường loại 1
                 if (player.curAction == ActionState.Skill1)
                 {
-                    timer_enemy += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    
+                    timer_enemy += (float)gameTime.ElapsedGameTime.TotalMilliseconds;               
                     
 
                     if (  player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
                         if (timer_enemy > 1000)
                         {
-
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
-
-                            Console.WriteLine(liEnemy[i].curHealth);
                         }
                         //effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 20, (int)liEnemy[i]._vt2_position.Y - 50);
                         player.flagCollection = true;
@@ -261,11 +257,10 @@ namespace MartialArtist
                     // Xóa Enemy ra khỏi List khi frame của Enemy >= tổng frame - 1
                     if (liEnemy[i]._i_currentFrame >= liEnemy[i]._i_totalFrame - 1)
                     {
-
-
                         Random rd = new Random();
                         int Number = rd.Next(0, 101);
 
+                        //Add heart
                         if (f_Check_Hearth(Number))
                             LiHearth.Add(new Effect(g.Content.Load<Texture2D>("Images/Effect/hearth"), new Vector2(liEnemy[i].Vt2_PositionEnemy.X + 110, liEnemy[i].Vt2_PositionEnemy.Y + 110), 0, 1, 1, 100, 1f));
 
@@ -285,8 +280,10 @@ namespace MartialArtist
 
                 if (player.f_Rectangle_dest(position).Intersects(dst))
                 {
-                    player.curHealth += 100;
-
+                    //Increase blood of player
+                    if (player .curHealth < player.health )
+                        player.curHealth += 100;
+                    //Remove heart after collision
                     LiHearth.RemoveAt(i);
                 }
             }

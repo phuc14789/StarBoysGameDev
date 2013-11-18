@@ -23,7 +23,7 @@ namespace MartialArtist
         private Vector2 _vt2_PositionEnemy; // Có thể bỏ
 
         // Tốc độ Enemy
-        private int  _f_Speed = 3;
+        private int  _f_Speed;
 
         // Mạng sống của Enemy
         private bool _b_Life; 
