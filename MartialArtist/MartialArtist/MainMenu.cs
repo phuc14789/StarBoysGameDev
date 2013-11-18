@@ -30,7 +30,6 @@ namespace MartialArtist
             exitButton = new Button(0.7f);
             speakerButton = new Button(0.7f);
         }
-        bool flag = false;
 
         public void Update(GameTime gameTime, ContentManager Content)
         {
@@ -53,23 +52,23 @@ namespace MartialArtist
             ////2
             if (rect_mouse.Intersects(aboutButton.rect_button))
             {
-                aboutButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Aboutbar"), new Vector2(750, 90));
+                aboutButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Aboutbar"), new Vector2(750, 160));
                 if (mouse.LeftButton == ButtonState.Pressed) aboutButton.isClicked = true;
             }
             else
             {
-                aboutButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Aboutbar" + "_click"), new Vector2(750, 90));
+                aboutButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Aboutbar" + "_click"), new Vector2(750, 160));
                 aboutButton.isClicked = false;
             }
             //3
             if (rect_mouse.Intersects(playButton.rect_button))
             {
-                playButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Playbar"), new Vector2(750, 160));
+                playButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Playbar"), new Vector2(750, 90));
                 if (mouse.LeftButton == ButtonState.Pressed) playButton.isClicked = true;
             }
             else
             {
-                playButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Playbar" + "_click"), new Vector2(750, 160));
+                playButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Playbar" + "_click"), new Vector2(750, 90));
                 playButton.isClicked = false;
             }
             //4
@@ -83,34 +82,31 @@ namespace MartialArtist
                 exitButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Exitbar" + "_click"), new Vector2(748, 230));
                 exitButton.isClicked = false;
             }
-            //Loa
-            if (rect_mouse.Intersects(speakerButton.rect_button))
-            {
-                speakerButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Speakerbar"), new Vector2(820, 500));
-                if (mouse.LeftButton == ButtonState.Pressed)
-                {
-                    flag = true;
-                }
-            }
-            else
-            {
-                speakerButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Speakerbar" + "_click"), new Vector2(820, 500));
-            }
-            if (flag == true)
-            {
-                speakerButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Speaker_bar_stop"), new Vector2(820, 500));
 
+            //Loa
+            if (speakerButton.isClicked == false)
+            {
+               speakerButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Speakerbar" + "_click"), new Vector2(820, 500));
+                
                 if (rect_mouse.Intersects(speakerButton.rect_button))
                 {
                     speakerButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Speakerbar"), new Vector2(820, 500));
-                    if (mouse.LeftButton == ButtonState.Pressed)
-                    {
-                        speakerButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Speakerbar" + "_click"), new Vector2(820, 500));
 
-                    }
-                }
+                    if (mouse.LeftButton == ButtonState.Pressed) speakerButton.isClicked = true; 
+                }                
             }
+            else
+            {
+                speakerButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Speaker_bar_stop"), new Vector2(820, 500));
+                if (rect_mouse.Intersects(speakerButton.rect_button))
+                {
+                    speakerButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Speakerbar"), new Vector2(820, 500));
 
+                    if (mouse.LeftButton == ButtonState.Pressed) speakerButton.isClicked = false;
+                }  
+               
+            }
+            Console.WriteLine(speakerButton.isClicked);
         }
 
         public void Draw(SpriteBatch spriteBatch)

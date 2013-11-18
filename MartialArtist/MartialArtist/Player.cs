@@ -116,7 +116,7 @@ namespace MartialArtist
                     if (key.IsKeyDown(Keys.D) && key.IsKeyDown(Keys.LeftShift))
                     {
                         Run(Content);
-                        velocity.X = 2 * moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        velocity.X = 1.2f * moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         moveFrame(gameTime);
                         animationCharacter();
                         flip = SpriteEffects.None;
@@ -136,7 +136,7 @@ namespace MartialArtist
                     if (key.IsKeyDown(Keys.A) && key.IsKeyDown(Keys.LeftShift))
                     {
                         Run(Content);
-                        velocity.X = 2 * -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        velocity.X = 1.2f * -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         moveFrame(gameTime);
                         animationCharacter();
                         flip = SpriteEffects.FlipHorizontally;
