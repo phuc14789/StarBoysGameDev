@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 namespace MartialArtist
 {
     class MainMenu
@@ -17,6 +20,8 @@ namespace MartialArtist
         public Button exitButton;
         public Button speakerButton;
 
+        SoundEffect Selectmenu;
+        SoundEffectInstance SelectmenuInstance;
         Rectangle rect_mouse;
         MouseState mouse;
         KeyboardState key;
@@ -29,6 +34,8 @@ namespace MartialArtist
             playButton = new Button(0.7f);
             exitButton = new Button(0.7f);
             speakerButton = new Button(0.7f);
+            Selectmenu = Content.Load<SoundEffect>("Sounds/MenuSelect");
+            SelectmenuInstance = Selectmenu.CreateInstance();
         }
 
         public void Update(GameTime gameTime, ContentManager Content)
@@ -43,6 +50,8 @@ namespace MartialArtist
             {
                 optionButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/Optionbar"), new Vector2(750, 20));
                 if (mouse.LeftButton == ButtonState.Pressed) optionButton.isClicked = true;
+                SelectmenuInstance.Volume = 0.5f;
+                SelectmenuInstance.Play();
             }
             else
             {

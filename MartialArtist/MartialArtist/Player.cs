@@ -30,7 +30,8 @@ namespace MartialArtist
         public int damge;
         int skillCombo;
         public Color[] textureData;
-
+        SoundEffect Swing;
+        SoundEffectInstance SwingInstance;  
         //Varible for control character
         const float gravity = 50f;
         Vector2 velocity;
@@ -82,6 +83,8 @@ namespace MartialArtist
             curCombo = skillCombo;
             healthbar = Content.Load<Texture2D>("Images/HealthBar/mau");
             comboBar = Content.Load<Texture2D>("Images/HealthBar/combo");
+            Swing = Content.Load<SoundEffect>("Sounds/SwingE");
+            SwingInstance = Swing.CreateInstance();
             
         }
 
@@ -165,6 +168,8 @@ namespace MartialArtist
             {
                 if (timer_Skill > 00)
                 {
+                    SwingInstance.Volume = 0.5f;
+                    SwingInstance.Play();
                     curAction = ActionState.Skill1;
                 }
             }
@@ -199,6 +204,8 @@ namespace MartialArtist
             //SlashUpSkill //SlashUpCombo
             if (key.IsKeyDown(Keys.K))
             {
+                SwingInstance.Volume = 0.5f;
+                SwingInstance.Play();
                 curAction = ActionState.Skill2;
             }
 
@@ -230,6 +237,8 @@ namespace MartialArtist
             //JumpSlashSkill //JumpSlashCombo
             if (key.IsKeyDown(Keys.L))
             {
+                SwingInstance.Volume = 0.5f;
+                SwingInstance.Play();
                 curAction = ActionState.Skill3;
             }
 

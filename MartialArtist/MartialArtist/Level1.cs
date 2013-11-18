@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace MartialArtist
 {
@@ -15,7 +18,10 @@ namespace MartialArtist
         Game g;
         Texture2D background;
         Texture2D healthTexture;
-
+        SoundEffect Hit;
+        SoundEffectInstance HitInstance;
+        SoundEffect Health;
+        SoundEffectInstance HealthInstance;
 
 
         Effect effect;
@@ -44,7 +50,10 @@ namespace MartialArtist
             effect = new Effect(Content.Load<Texture2D>("Images/Effect/Effect_01") , Vector2.Zero, 0, 1, 4, 100, 0.7f);
 
             this.g = g;
-
+            Hit = Content.Load<SoundEffect>("Sounds/Hit");
+            HitInstance = Hit.CreateInstance();
+            Health = Content.Load<SoundEffect>("Sounds/UpLevel");
+            HealthInstance = Health.CreateInstance();
     
         }
 
@@ -119,13 +128,15 @@ namespace MartialArtist
                 // Sử dụng Skill thường loại 1
                 if (player.curAction == ActionState.Skill1)
                 {
-                    timer_enemy += (float)gameTime.ElapsedGameTime.TotalMilliseconds;               
+                    timer_enemy += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                     
 
                     if (  player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
                         if (timer_enemy > 1000)
                         {
+                            HitInstance.Volume = 0.7f;
+                            HitInstance.Play();
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
                         }
@@ -143,11 +154,13 @@ namespace MartialArtist
                 if (player.curAction == ActionState.Skill2)
                 {
                     timer_enemy += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
+                    
                     if (player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
                         if (timer_enemy > 1000)
                         {
+                            HitInstance.Volume = 0.7f;
+                            HitInstance.Play();
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
                         }
@@ -158,11 +171,13 @@ namespace MartialArtist
                 if (player.curAction == ActionState.Skill3)
                 {
                     timer_enemy += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
+                    
                     if (player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
                         if (timer_enemy > 1000)
                         {
+                            HitInstance.Volume = 0.7f;
+                            HitInstance.Play();
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
                         }
@@ -283,6 +298,8 @@ namespace MartialArtist
                     //Increase blood of player
                     if (player .curHealth < player.health )
                         player.curHealth += 100;
+                    HealthInstance.Volume = 1f;
+                    HealthInstance.Play();
                     //Remove heart after collision
                     LiHearth.RemoveAt(i);
                 }

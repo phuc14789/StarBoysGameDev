@@ -19,7 +19,10 @@ namespace MartialArtist
         LevelManager levelManager;
         //Begin gameState, begin with Main Menu
         GameState currentGameMenu = GameState.MainMenu;
-
+        SoundEffect MenuSong;
+        SoundEffectInstance MenuSongInstance;
+        SoundEffect MainSong;
+        SoundEffectInstance MainSongInstance;
         //States for game
         enum GameState
         {
@@ -57,6 +60,10 @@ namespace MartialArtist
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            MenuSong = Content.Load<SoundEffect>("Sounds/Menu");
+            MenuSongInstance = MenuSong.CreateInstance();
+            MainSong = Content.Load<SoundEffect>("Sounds/MainTheme5");
+            MainSongInstance = MainSong.CreateInstance();
             mainMenu.LoadContent(Content);
         }
 
@@ -72,7 +79,8 @@ namespace MartialArtist
                 case GameState.MainMenu:
 
                     mainMenu.Update(gameTime, Content);
-  
+                    MenuSongInstance.Volume = 0.7f;
+                    MenuSongInstance.Play();
                     //Change gameState to Playing when button is clicked
                     if (mainMenu.playButton.isClicked) { currentGameMenu = GameState.Playing; }
 
@@ -82,6 +90,9 @@ namespace MartialArtist
 
                 //Playing State
                 case GameState.Playing:
+                    MenuSongInstance.Stop();
+                    MainSongInstance.Volume = 0.7f;
+                    MainSongInstance.Play();
                     if (!levelManager.GameOver)
                         levelManager.Update(gameTime);
                     else
