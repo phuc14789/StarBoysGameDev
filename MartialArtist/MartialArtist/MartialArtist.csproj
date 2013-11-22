@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="Boss.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Effect.cs" />
@@ -120,6 +121,8 @@
     <Compile Include="Global.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Level1.cs" />
+    <Compile Include="Level2.cs" />
+    <Compile Include="Level3.cs" />
     <Compile Include="LevelManager.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Player.cs" />

@@ -353,6 +353,63 @@ namespace MartialArtist
             }            
         }
 
+
+
+        public void f_UpdateEnemy_Level2(GameTime gameTime, ContentManager Content, Rectangle recplayer, int X)
+        {
+            time += (float)gameTime.ElapsedGameTime.Milliseconds;
+
+            // Lấy tọa độ Enemy (Tọa độ này sẽ dời khác xa so với vẽ)
+            _vt2_PositionEnemy = new Vector2(_vt2_position.X + 135, _vt2_position.Y + 90);
+
+            // Nếu 2 rectangle va chạm thì
+            if (f_Rectangle_dest(_vt2_PositionEnemy).Intersects(recplayer) == true) //_rect_destinationRectangle
+            {
+                // Enemy đánh 
+                if (time < 1000) // _i_currentFrame <= _i_totalFrame - 1 && 
+                {
+                    f_Knock_Level2(Content);
+                    Collision = true;
+                    moveFrame(gameTime);
+                    animationCharacter();
+
+                }
+
+                // Nghĩ nghơi
+                if (time >= 1000)
+                {
+                    f_Standing_Level2(Content);
+                    Collision = true;
+
+                    moveFrame(gameTime);
+                    animationCharacter();
+
+                    if (time >= 2000) // sai chổ này :(
+                        time = 0;
+                }
+
+            }
+            else
+            {
+
+                if (f_Distand(X) > 200)
+                {
+                    f_Run_Level2(Content);
+                }
+                else
+                {
+                    f_Walk_Level2(Content);
+                }
+
+                // Thực hiện đi bộ
+                
+                Collision = false;
+
+                moveFrame(gameTime);
+                animationCharacter();
+            }
+        }
+
         /// <summary>
         /// Enemy di chuyển xung quanh nhân vật
         /// </summary>
@@ -400,9 +457,18 @@ namespace MartialArtist
 
         public void f_Fall(ContentManager Content)
         {
-            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_fall");
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_fall_die");
             _i_Rows = 2;
             _i_Columns = 4;
+            _f_delay = 40f;
+            calculateFrame();
+        }
+
+        public void f_Fall_Light(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_fall_light");
+            _i_Rows = 1;
+            _i_Columns = 3;
             _f_delay = 40f;
             calculateFrame();
         }
@@ -422,6 +488,66 @@ namespace MartialArtist
 
             _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_punch");
             _i_Rows = 2;
+            _i_Columns = 6;
+            _f_delay = 40f;
+            calculateFrame();
+        }
+
+        //================================================
+        // Level 2
+        //================================================
+
+        public void f_Standing_Level2(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_standing");
+            _i_Rows = 1;
+            _i_Columns = 7;
+            _f_delay = 100f;
+            calculateFrame();
+        }
+
+        public void f_Walk_Level2(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_walk");
+            _i_Rows = 4;   
+            _i_Columns = 4;
+            _f_delay = 100f;
+            calculateFrame();
+        }
+
+        public void f_Fall_Level2(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_fall_die");
+            _i_Rows = 1;
+            _i_Columns = 6;
+            _f_delay = 40f;
+            calculateFrame();
+        }
+
+        public void f_Fall_light_Level2(ContentManager Content)
+        {
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_fall_light");
+            _i_Rows = 1;
+            _i_Columns = 3;
+            _f_delay = 40f;
+            calculateFrame();
+        }
+            
+        public void f_Knock_Level2(ContentManager Content)
+        {
+
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_knock");
+            _i_Rows = 2;
+            _i_Columns = 4;
+            _f_delay = 100f;
+            calculateFrame();
+        }
+
+        public void f_Run_Level2(ContentManager Content)
+        {
+
+            _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_run");
+            _i_Rows = 1;
             _i_Columns = 6;
             _f_delay = 40f;
             calculateFrame();

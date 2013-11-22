@@ -9,10 +9,9 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-
 namespace MartialArtist
 {
-    class Level1 : Level
+    class Level2: Level
     {        
         //Initialize Objects
         Game g;
@@ -29,20 +28,10 @@ namespace MartialArtist
         List<Effect> LiHearth;
 
 
-        public Level1(Game g, ContentManager Content)
+        public Level2(Game g, ContentManager Content)
         {
             camera = new Camera(g.GraphicsDevice.Viewport);
             player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"),g.Content , new Vector2(0, 0), 1000, 20 , 100, 0, 2, 4, 50f, 0.7f);
-
-
-            ////==============
-            //pixel = new Texture2D(g.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            //pixel.SetData(new[] { Color.White });
-
-            //enemy = new Enemy[3];          
-            //enemy[0] = new Enemy(Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_walk"), g.Content , new Vector2(800, 200), 300, 3, 0, 3, 5, 50f, 0.66f);
-            //enemy[1] = new Enemy(Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_walk"), g.Content, new Vector2(800, 200), 300, 3, 0, 4, 4, 50f, 0.66f);
-            //enemy[2] = new Enemy(Content.Load<Texture2D>("Images/Enemy/Boss/Boss_walk"), g.Content, new Vector2(800, 200), 300, 3, 0, 3, 4, 50f, 0.66f);
 
 
             // Khởi tạo list Enemy
@@ -85,14 +74,14 @@ namespace MartialArtist
             // Thêm Enemy với số lượng nhỏ hơn 10
             if (timer > delay && liEnemy.Count < 10)  
             {
-                liEnemy.Add(new Enemy(g.Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_walk"), g.Content, new Vector2(800, 200), 300, 20, 0, 3, 5, 50f, 0.66f));
+                liEnemy.Add(new Enemy(g.Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_walk"), g.Content, new Vector2(800, 200), 300, 20, 0, 4, 4, 50f, 0.66f));
 
                 timer = 0;
             }
 
             
             // Duyệt qua tất cả các Enemy
-            for(int i = 0;i< liEnemy.Count; i++)//foreach (Enemy e in liEnemy) //Enemy e in enemy
+            for(int i = 0; i< liEnemy.Count; i++)//foreach (Enemy e in liEnemy) //Enemy e in enemy
             {
                 // Cập nhật Enemy
                 liEnemy[i].Update(gameTime, g.Content);
@@ -105,7 +94,7 @@ namespace MartialArtist
                 position = new Vector2((int)player._vt2_position.X + 135, (int)player._vt2_position.Y + 100);
 
                 // Xem Enemy có va chạm với player thì sử dụng skill của Enemy
-                liEnemy[i].f_UpdateEnemy(gameTime, g.Content, player.f_Rectangle_dest(position)); // player._rect_destinationRectangle
+                liEnemy[i].f_UpdateEnemy_Level2(gameTime, g.Content, player.f_Rectangle_dest(position), (int) player._vt2_position.X); // player._rect_destinationRectangle
 
                 // Nếu Enemy đánh player thì player mất 1 máu
 
@@ -120,6 +109,8 @@ namespace MartialArtist
                 // Xử lý Player va chạm với Enemy
                 f_CollisionPlayer_Enemy(gameTime);
             }
+
+
 
         }
 
@@ -154,7 +145,7 @@ namespace MartialArtist
                         effect.Update(gameTime, g.Content);
 
                         // Hiệu ứng khi enemy bị đánh
-                        liEnemy[i].f_Fall_Light(g.Content);
+                        liEnemy[i].f_Fall_light_Level2(g.Content);
                         liEnemy[i].calculateFrame();
                         liEnemy[i].moveFrame(gameTime);
                         liEnemy[i].animationCharacter();
@@ -257,9 +248,9 @@ namespace MartialArtist
                     timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
                     // Khởi tạo thong tin cho Enemy khi die
-                    liEnemy[i]._t_Image = g.Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_fall_die");
-                    liEnemy[i]._i_Rows = 2;
-                    liEnemy[i]._i_Columns = 4;
+                    liEnemy[i]._t_Image = g.Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_fall_die");
+                    liEnemy[i]._i_Rows = 1;
+                    liEnemy[i]._i_Columns = 6;
                     liEnemy[i]._f_delay = 5000f;
 
                     liEnemy[i]._vt2_position.Y = 235;
@@ -354,6 +345,14 @@ namespace MartialArtist
         }
 
 
+        float timeBoss = 0;
+
+        
+
+
+            
+      
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);
@@ -387,7 +386,7 @@ namespace MartialArtist
             }
 
             
-    
+           
             spriteBatch.End();
 
         }

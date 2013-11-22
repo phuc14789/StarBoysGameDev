@@ -32,7 +32,7 @@ namespace MartialArtist
         {
             //Create Levels
             Levels = new Level[MAXLEVEL];
-            Levels[0] = new Level1(g, Content);
+            Levels[0] = new Level3(g, Content); // Level1
 
             //Set begin Level
             Levels[0].LevelState = LEVELSTATE.PLAYING;
