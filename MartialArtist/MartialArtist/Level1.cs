@@ -25,24 +25,16 @@ namespace MartialArtist
 
 
         Effect effect;
-
+        SpriteFont font;
         List<Effect> LiHearth;
 
 
         public Level1(Game g, ContentManager Content)
         {
             camera = new Camera(g.GraphicsDevice.Viewport);
-            player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"),g.Content , new Vector2(0, 0), 1000, 20 , 100, 0, 2, 4, 50f, 0.7f);
+            player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"),g.Content , new Vector2(0, 0), 1000, 50 , 100, 0, 2, 4, 50f, 0.7f);
+            font = g.Content.Load<SpriteFont>("Fonts/Arial");
 
-
-            ////==============
-            //pixel = new Texture2D(g.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            //pixel.SetData(new[] { Color.White });
-
-            //enemy = new Enemy[3];          
-            //enemy[0] = new Enemy(Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_walk"), g.Content , new Vector2(800, 200), 300, 3, 0, 3, 5, 50f, 0.66f);
-            //enemy[1] = new Enemy(Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_walk"), g.Content, new Vector2(800, 200), 300, 3, 0, 4, 4, 50f, 0.66f);
-            //enemy[2] = new Enemy(Content.Load<Texture2D>("Images/Enemy/Boss/Boss_walk"), g.Content, new Vector2(800, 200), 300, 3, 0, 3, 4, 50f, 0.66f);
 
 
             // Khởi tạo list Enemy
@@ -53,41 +45,67 @@ namespace MartialArtist
             background = Content.Load<Texture2D>("Images/Background/Level1/Level1");
             healthTexture = Content.Load<Texture2D>("Images/HealthBar/Healthbar");
 
-            effect = new Effect(Content.Load<Texture2D>("Images/Effect/Effect_01") , Vector2.Zero, 0, 1, 4, 100, 0.7f);
+            effect = new Effect(Content.Load<Texture2D>("Images/Effect/Effect_01") , Vector2.Zero, 0, 1, 4, 100, 1.2f);
 
             this.g = g;
             Hit = Content.Load<SoundEffect>("Sounds/Hit");
             HitInstance = Hit.CreateInstance();
             Health = Content.Load<SoundEffect>("Sounds/UpLevel");
             HealthInstance = Health.CreateInstance();
+
+            
+            
     
         }
 
         Vector2 position;
 
         float timer = 0f;
-        float delay = 2000f;
+        float delay = 4000f; 
 
         float timer_hearth = 0f;
         float timer_enemy = 0f;
+
+        float delay_hearth = 500f;
         
         // Khi chưa va chạm giữa Player so với Enemy
 
+        int MAX = 10; 
 
+        int curKill = 0;
+
+
+        float timerString = 0f;
         public override void Update(GameTime gameTime)
         {
+
+            player.damge = 50;
+            
+
             camera.Update(gameTime, player);
             player.Update(gameTime, g.Content);
 
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             timer_hearth +=(float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            
+            timerString += (float)gameTime.ElapsedGameTime.Milliseconds;
+            
+
 
             // Thêm Enemy với số lượng nhỏ hơn 10
-            if (timer > delay && liEnemy.Count < 10)  
+            if (timer > delay && liEnemy.Count < MAX )  
             {
-                liEnemy.Add(new Enemy(g.Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_walk"), g.Content, new Vector2(800, 200), 300, 20, 0, 3, 5, 50f, 0.66f));
+               
+               liEnemy.Add(new Enemy(g.Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_walk"), g.Content, new Vector2(800, 200), 300, 20, 0, 3, 5, 50f, 0.66f));
 
                 timer = 0;
+            }
+
+
+            // Qua màn
+            if (curKill == MAX)
+            {
+                this.LevelState = LEVELSTATE.FINISHED;
             }
 
             
@@ -124,10 +142,13 @@ namespace MartialArtist
         }
 
 
+
         public void f_CollisionPlayer_Enemy(GameTime gameTime)
         {
 
             player.flagCollection = false;
+
+           
 
             // Duyệt qua tất cả các Enemy
             for (int i = 0; i < liEnemy.Count; i++)
@@ -141,8 +162,10 @@ namespace MartialArtist
 
                     if (  player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
-                        if (timer_enemy > 1000)
+                        if (timer_enemy > delay_hearth)
                         {
+                            Console.WriteLine(liEnemy[i].curHealth);
+
                             HitInstance.Volume = 0.7f;
                             HitInstance.Play();
                             liEnemy[i].curHealth -= player.damge;
@@ -150,7 +173,7 @@ namespace MartialArtist
                         }
                         //effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 20, (int)liEnemy[i]._vt2_position.Y - 50);
                         player.flagCollection = true;
-                        effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 20, (int)liEnemy[i]._vt2_position.Y - 50);
+                        effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 135 , (int)liEnemy[i]._vt2_position.Y -135 );
                         effect.Update(gameTime, g.Content);
 
                         // Hiệu ứng khi enemy bị đánh
@@ -170,13 +193,26 @@ namespace MartialArtist
                     
                     if (player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
-                        if (timer_enemy > 1000)
+                        if (timer_enemy > delay_hearth)
                         {
                             HitInstance.Volume = 0.7f;
                             HitInstance.Play();
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
                         }
+
+
+                        //effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 20, (int)liEnemy[i]._vt2_position.Y - 50);
+                        player.flagCollection = true;
+                        effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 135, (int)liEnemy[i]._vt2_position.Y - 135);
+                        effect.Update(gameTime, g.Content);
+
+                        // Hiệu ứng khi enemy bị đánh
+                        liEnemy[i].f_Fall_Light(g.Content);
+                        liEnemy[i].calculateFrame();
+                        liEnemy[i].moveFrame(gameTime);
+                        liEnemy[i].animationCharacter();
+
                     }
                 }
 
@@ -187,13 +223,24 @@ namespace MartialArtist
                     
                     if (player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
-                        if (timer_enemy > 1000)
+                        if (timer_enemy > delay_hearth)
                         {
                             HitInstance.Volume = 0.7f;
                             HitInstance.Play();
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
                         }
+
+                        //effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 20, (int)liEnemy[i]._vt2_position.Y - 50);
+                        player.flagCollection = true;
+                        effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 135, (int)liEnemy[i]._vt2_position.Y - 135);
+                        effect.Update(gameTime, g.Content);
+
+                        // Hiệu ứng khi enemy bị đánh
+                        liEnemy[i].f_Fall_Light(g.Content);
+                        liEnemy[i].calculateFrame();
+                        liEnemy[i].moveFrame(gameTime);
+                        liEnemy[i].animationCharacter();
 
                     }
                 }
@@ -209,12 +256,23 @@ namespace MartialArtist
                     if (player.f_Rectangle_srcPlayer(vector_src).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy))) //(player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
                         // Mất 30% máu
-                        if (timer_enemy > 1000)
+                        if (timer_enemy > delay_hearth)
                         {
                             liEnemy[i].curHealth -= player.damge + 20;
                             timer_enemy = 0f;
                         }
 
+
+                        //effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 20, (int)liEnemy[i]._vt2_position.Y - 50);
+                        player.flagCollection = true;
+                        effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 135, (int)liEnemy[i]._vt2_position.Y - 135);
+                        effect.Update(gameTime, g.Content);
+
+                        // Hiệu ứng khi enemy bị đánh
+                        liEnemy[i].f_Fall_Light(g.Content);
+                        liEnemy[i].calculateFrame();
+                        liEnemy[i].moveFrame(gameTime);
+                        liEnemy[i].animationCharacter();
                     }
                 }
 
@@ -226,11 +284,22 @@ namespace MartialArtist
                     if (player.f_Rectangle_srcPlayer(vector_src).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
                         // Mất 60% máu
-                        if (timer_enemy > 1000)
+                        if (timer_enemy > delay_hearth)
                         {
                             liEnemy[i].curHealth -= player.damge + 30;
                             timer_enemy = 0f;
                         }
+
+                        //effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 20, (int)liEnemy[i]._vt2_position.Y - 50);
+                        player.flagCollection = true;
+                        effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 135, (int)liEnemy[i]._vt2_position.Y - 135);
+                        effect.Update(gameTime, g.Content);
+
+                        // Hiệu ứng khi enemy bị đánh
+                        liEnemy[i].f_Fall_Light(g.Content);
+                        liEnemy[i].calculateFrame();
+                        liEnemy[i].moveFrame(gameTime);
+                        liEnemy[i].animationCharacter();
                     }
                 }
 
@@ -242,11 +311,22 @@ namespace MartialArtist
                     if (player.f_Rectangle_srcPlayer(vector_src).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
                         // die luôn
-                        if (timer_enemy > 1000)
+                        if (timer_enemy > delay_hearth)
                         {
                             liEnemy[i].curHealth -= player.damge + 50;
                             timer_enemy = 0f;
                         }
+
+                        //effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 20, (int)liEnemy[i]._vt2_position.Y - 50);
+                        player.flagCollection = true;
+                        effect._vt2_position = new Vector2((int)liEnemy[i]._vt2_position.X - 135, (int)liEnemy[i]._vt2_position.Y - 135);
+                        effect.Update(gameTime, g.Content);
+
+                        // Hiệu ứng khi enemy bị đánh
+                        liEnemy[i].f_Fall_Light(g.Content);
+                        liEnemy[i].calculateFrame();
+                        liEnemy[i].moveFrame(gameTime);
+                        liEnemy[i].animationCharacter();
                     }
                 }
 
@@ -304,6 +384,9 @@ namespace MartialArtist
 
                             liEnemy.RemoveAt(i);
 
+                            curKill++;
+
+                            Global.score += rd.Next(30, 50);
 
                         }
                         timer = 0f;
@@ -358,6 +441,10 @@ namespace MartialArtist
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);
 
+            
+
+
+
             //Draw background Level1
             spriteBatch.Draw(background, new Vector2 (0,-50), new Rectangle(0, 0, 3000, 720), Color.White, 0, Vector2.Zero, 0.83f, SpriteEffects.None, 0f);
 
@@ -375,9 +462,11 @@ namespace MartialArtist
 
 
          
+            // draw effect
             if (player.flagCollection == true)
                 effect.Draw(spriteBatch);
 
+            // draw hearth
             if (LiHearth.Count > 0)
             {
                 foreach (Effect e in LiHearth)
@@ -387,6 +476,13 @@ namespace MartialArtist
             }
 
             
+
+            // draw start level1
+            if (timerString < delay)
+                spriteBatch.DrawString(font, "LEVEL1  BEGIN", new Vector2(camera.centre.X + 350, camera.centre.Y + 200), Color.White);
+           
+            // draw score
+            spriteBatch.DrawString(font, Global.score.ToString(), new Vector2(camera.centre.X + 850, camera.centre.Y + 27), Color.White);
     
             spriteBatch.End();
 
@@ -395,28 +491,5 @@ namespace MartialArtist
 
 
 
-        
-        //========================
-        Texture2D pixel;
-
-        private void DrawBorder(SpriteBatch spriteBatch, Rectangle rectangleToDraw, int thicknessOfBorder, Color borderColor)
-        {
-            // Draw top line
-            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, thicknessOfBorder), borderColor);
-
-            // Draw left line
-            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, thicknessOfBorder, rectangleToDraw.Height), borderColor);
-
-            // Draw right line
-            spriteBatch.Draw(pixel, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - thicknessOfBorder),
-                                            rectangleToDraw.Y,
-                                            thicknessOfBorder,
-                                            rectangleToDraw.Height), borderColor);
-            // Draw bottom line
-            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X,
-                                            rectangleToDraw.Y + rectangleToDraw.Height - thicknessOfBorder,
-                                            rectangleToDraw.Width,
-                                            thicknessOfBorder), borderColor);
-        }
     }
 }

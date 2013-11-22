@@ -8,6 +8,10 @@ namespace MartialArtist
 {
     public static class Global
     {
+        public static int score = 0 ;
+        public static bool sound;
+        public static bool music = true;
+
         public static int screenWidth = 800;
         public static int screenHeight = 480;
 

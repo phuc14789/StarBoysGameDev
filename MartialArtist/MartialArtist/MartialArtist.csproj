@@ -119,6 +119,7 @@
     <Compile Include="Effect.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="HowToPlay.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Level2.cs" />

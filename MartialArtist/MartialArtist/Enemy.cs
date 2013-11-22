@@ -123,7 +123,7 @@ namespace MartialArtist
             // Vị trí xuất hiện từ màn hình đến vị trí X của player - 500 và từ vị trí X player + 500
             //_vt2_position = f_RandomEnemy(new Vector2(0, Level.player._vt2_position.X - 200), new Vector2(Level.player._vt2_position.X + 200, 3000), 210); // lấy cái này nhưng xét sau
 
-            _vt2_position = f_RandomEnemy(new Vector2(0, 300), new Vector2(700, 800), 210);
+            _vt2_position = f_RandomEnemy(new Vector2(0, 300), new Vector2(1000, 1500), 210);
 
             Random rd = new Random();
             _f_Speed = rd.Next(1, 5);
@@ -460,7 +460,7 @@ namespace MartialArtist
             _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_fall_die");
             _i_Rows = 2;
             _i_Columns = 4;
-            _f_delay = 40f;
+            _f_delay = 100f;
             calculateFrame();
         }
 
@@ -469,7 +469,7 @@ namespace MartialArtist
             _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy1/Enemy01_fall_light");
             _i_Rows = 1;
             _i_Columns = 3;
-            _f_delay = 40f;
+            _f_delay = 100f;
             calculateFrame();
         }
 
@@ -520,7 +520,7 @@ namespace MartialArtist
             _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_fall_die");
             _i_Rows = 1;
             _i_Columns = 6;
-            _f_delay = 40f;
+            _f_delay = 100f;
             calculateFrame();
         }
 
@@ -529,7 +529,7 @@ namespace MartialArtist
             _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_fall_light");
             _i_Rows = 1;
             _i_Columns = 3;
-            _f_delay = 40f;
+            _f_delay = 100f;
             calculateFrame();
         }
             
@@ -549,7 +549,7 @@ namespace MartialArtist
             _t_Image = Content.Load<Texture2D>("Images/Enemy/Enemy2/Enemy02_run");
             _i_Rows = 1;
             _i_Columns = 6;
-            _f_delay = 40f;
+            _f_delay = 80f;
             calculateFrame();
         }
 

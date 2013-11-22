@@ -17,6 +17,7 @@ namespace MartialArtist
         SpriteBatch spriteBatch;
         MainMenu mainMenu;
         LevelManager levelManager;
+        HowToPlay howtoPlay;
         //Begin gameState, begin with Main Menu
         GameState currentGameMenu = GameState.MainMenu;
         SoundEffect MenuSong;
@@ -27,7 +28,7 @@ namespace MartialArtist
         enum GameState
         {
             MainMenu,
-            Option,
+            HowToPlay,
             Sorce,
             About,
             Help,
@@ -53,6 +54,8 @@ namespace MartialArtist
         {
             //Create MainMenu Object
             mainMenu = new MainMenu();
+            howtoPlay = new HowToPlay();
+            howtoPlay.LoadContent(Content);
             levelManager = new LevelManager(this, Content);
             base.Initialize();
         }
@@ -79,13 +82,34 @@ namespace MartialArtist
                 case GameState.MainMenu:
 
                     mainMenu.Update(gameTime, Content);
-                    MenuSongInstance.Volume = 0.7f;
-                    MenuSongInstance.Play();
+                    howtoPlay.Update(gameTime, Content);
+                    if (Global.music == true)
+                    {
+                        MenuSongInstance.Volume = 1f;
+                        MenuSongInstance.Play();
+                    }
+                    else
+                    {
+                        MenuSongInstance.Stop();
+                    }
+                    ////Change gameState to HowToPlay when button is clicked
+                    if (mainMenu.howtoplayButton.isClicked) { currentGameMenu = GameState.HowToPlay; }
+                    ////Change gameState to About when button is clicked
+                    if (mainMenu.aboutButton.isClicked) { currentGameMenu = GameState.About; }
                     //Change gameState to Playing when button is clicked
                     if (mainMenu.playButton.isClicked) { currentGameMenu = GameState.Playing; }
 
                     //Change gameState to Playing when button is clicked
                     if (mainMenu.exitButton.isClicked) { currentGameMenu = GameState.Exit; }
+                    break;
+
+                //HowToPlay State
+                case GameState.HowToPlay:
+                    howtoPlay.Update(gameTime, Content);
+                    if (howtoPlay.backButton.isClicked)
+                    {
+                        currentGameMenu = GameState.MainMenu;
+                    }
                     break;
 
                 //Playing State
@@ -109,13 +133,19 @@ namespace MartialArtist
         }
 
         protected override void Draw(GameTime gameTime)
-        {   
+        {
             switch (currentGameMenu)
             {
                 //MainMenu State
                 case GameState.MainMenu:
                     //Draw Main Menu
                     mainMenu.Draw(spriteBatch);
+                    break;
+
+                //HowToPlay State
+                case GameState.HowToPlay:
+                    //Draw Main Menu
+                    howtoPlay.Draw(spriteBatch);
                     break;
 
                 //Playing State

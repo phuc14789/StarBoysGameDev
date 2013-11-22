@@ -24,7 +24,7 @@ namespace MartialArtist
 
 
         Effect effect;
-
+        SpriteFont font;
         List<Effect> LiHearth;
 
         // Boss
@@ -34,16 +34,13 @@ namespace MartialArtist
         public Level3(Game g, ContentManager Content)
         {
             camera = new Camera(g.GraphicsDevice.Viewport);
-            player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"),g.Content , new Vector2(0, 0), 1000, 20 , 100, 0, 2, 4, 50f, 0.7f);
+            player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"),g.Content , new Vector2(0, 0), 1000, 100 , 100, 0, 2, 4, 50f, 0.7f);
+            font = g.Content.Load<SpriteFont>("Fonts/Arial");
 
+            boss = new Boss(Content.Load<Texture2D>("Images/Enemy/Boss/Boss_walk"), g.Content, new Vector2(0, 100), 3000, 100, 0, 3, 4, 100f, 1f);
 
-            boss = new Boss(Content.Load<Texture2D>("Images/Enemy/Boss/Boss_walk"), g.Content, new Vector2(0, 100), 1000, 100, 0, 3, 4, 100f, 1f);
-
-            //==============
-            pixel = new Texture2D(g.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            pixel.SetData(new[] { Color.White });
-
-
+      
+          
             // Khởi tạo list Enemy
             //liEnemy = new List<Enemy>();
             LiHearth = new List<Effect>();
@@ -73,13 +70,18 @@ namespace MartialArtist
         // Khi chưa va chạm giữa Player so với Enemy
 
 
+        float timerString = 0f;
         public override void Update(GameTime gameTime)
         {
+            player.damge = 100;
+
             camera.Update(gameTime, player);
             player.Update(gameTime, g.Content);
 
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             timer_hearth +=(float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            
+            timerString += (float)gameTime.ElapsedGameTime.Milliseconds;
 
             // Boss
 
@@ -210,18 +212,18 @@ namespace MartialArtist
             }
 
 
-            //Rectangle titleSafeRectangleSRC_player_1 = new Rectangle((int)position.X, (int)position.Y, 80, 150);//GraphicsDevice.Viewport.TitleSafeArea
-            //// Call our method (also defined in this blog-post)
-            //DrawBorder(spriteBatch, titleSafeRectangleSRC_player_1, 5, Color.Red);
-            
+
             boss.Draw(spriteBatch);
 
-            //Rectangle titleSafeRectangleSRC_player = new Rectangle((int)boss._vt2_position.X + 50, (int)boss._vt2_position.Y + 100, 350, 250);//GraphicsDevice.Viewport.TitleSafeArea
-            //// Call our method (also defined in this blog-post)
-            //DrawBorder(spriteBatch, titleSafeRectangleSRC_player, 5, Color.Red);
 
-            //Rectangle titleSafeRectangleSRC = new Rectangle((int)boss._vt2_position.X + 176, (int)boss._vt2_position.Y + 100, 150, 250);//GraphicsDevice.Viewport.TitleSafeArea
-            //DrawBorder(spriteBatch, titleSafeRectangleSRC, 5, Color.Red);
+            // draw start level1
+            if (timerString < delay)
+                spriteBatch.DrawString(font, "FINAL  ROUND", new Vector2(camera.centre.X + 350, camera.centre.Y + 200), Color.White);
+
+
+            // draw score
+            spriteBatch.DrawString(font, Global.score.ToString(), new Vector2(camera.centre.X + 850, camera.centre.Y + 27), Color.White);
+    
 
             spriteBatch.End();
 
@@ -231,27 +233,6 @@ namespace MartialArtist
 
 
         
-        //========================
-        Texture2D pixel;
-
-        private void DrawBorder(SpriteBatch spriteBatch, Rectangle rectangleToDraw, int thicknessOfBorder, Color borderColor)
-        {
-            // Draw top line
-            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, thicknessOfBorder), borderColor);
-
-            // Draw left line
-            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, thicknessOfBorder, rectangleToDraw.Height), borderColor);
-
-            // Draw right line
-            spriteBatch.Draw(pixel, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - thicknessOfBorder),
-                                            rectangleToDraw.Y,
-                                            thicknessOfBorder,
-                                            rectangleToDraw.Height), borderColor);
-            // Draw bottom line
-            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X,
-                                            rectangleToDraw.Y + rectangleToDraw.Height - thicknessOfBorder,
-                                            rectangleToDraw.Width,
-                                            thicknessOfBorder), borderColor);
-        }
+    
     }
 }

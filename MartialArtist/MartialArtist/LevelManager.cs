@@ -26,13 +26,15 @@ namespace MartialArtist
         const int MAXLEVEL = 3;
 
         // Collection of levels which are created as subclasses of Level
-        Level[] Levels;        
+        public static Level[] Levels;        
 
         public LevelManager(Game g, ContentManager Content)
         {
             //Create Levels
             Levels = new Level[MAXLEVEL];
-            Levels[0] = new Level3(g, Content); // Level1
+            Levels[0] = new Level1(g, Content); // Level1
+            Levels[1] = new Level2(g, Content);
+            Levels[2] = new Level3(g, Content);
 
             //Set begin Level
             Levels[0].LevelState = LEVELSTATE.PLAYING;
