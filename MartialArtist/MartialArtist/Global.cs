@@ -11,6 +11,7 @@ namespace MartialArtist
         public static int score = 0 ;
         public static bool sound;
         public static bool music = true;
+        public static bool allmusic = true;
 
         public static int screenWidth = 800;
         public static int screenHeight = 480;

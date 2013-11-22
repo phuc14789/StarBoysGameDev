@@ -55,8 +55,15 @@ namespace MartialArtist
                 howtoplayButton.Update(gameTime, Content.Load<Texture2D>("Images/Button/How To Play_bar_01"), new Vector2(750, 20));
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
-                    SelectmenuInstance.Volume = 0.5f;
-                    SelectmenuInstance.Play();
+                    if (Global.allmusic == true)
+                    {
+                        SelectmenuInstance.Volume = 0.5f;
+                        SelectmenuInstance.Play();
+                    }
+                    else
+                    {
+                        SelectmenuInstance.Stop();
+                    }
                     howtoplayButton.isClicked = true;
                 }
 
@@ -74,8 +81,15 @@ namespace MartialArtist
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
                     aboutButton.isClicked = true;
-                    SelectmenuInstance.Volume = 0.5f;
-                    SelectmenuInstance.Play();
+                    if (Global.allmusic == true)
+                    {
+                        SelectmenuInstance.Volume = 0.5f;
+                        SelectmenuInstance.Play();
+                    }
+                    else
+                    {
+                        SelectmenuInstance.Stop();
+                    }
                 }
             }
             else
@@ -90,8 +104,15 @@ namespace MartialArtist
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
                     playButton.isClicked = true;
-                    SelectmenuInstance.Volume = 0.5f;
-                    SelectmenuInstance.Play();
+                    if (Global.allmusic == true)
+                    {
+                        SelectmenuInstance.Volume = 0.5f;
+                        SelectmenuInstance.Play();
+                    }
+                    else
+                    {
+                        SelectmenuInstance.Stop();
+                    }
                 }
             }
             else
@@ -106,8 +127,15 @@ namespace MartialArtist
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
                     exitButton.isClicked = true;
-                    SelectmenuInstance.Volume = 0.5f;
-                    SelectmenuInstance.Play();
+                    if (Global.allmusic == true)
+                    {
+                        SelectmenuInstance.Volume = 0.5f;
+                        SelectmenuInstance.Play();
+                    }
+                    else
+                    {
+                        SelectmenuInstance.Stop();
+                    }
                 }
             }
             else
@@ -164,7 +192,7 @@ namespace MartialArtist
                     if (mouse.LeftButton == ButtonState.Pressed)
                     {
                         musicButton.isClicked = true;
-
+                        Global.allmusic = false;
                     }
                 }
             }
@@ -179,6 +207,7 @@ namespace MartialArtist
                     {
 
                         musicButton.isClicked = false;
+                        Global.allmusic = true;
                     }
                 }
 

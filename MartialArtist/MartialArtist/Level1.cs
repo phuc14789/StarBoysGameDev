@@ -22,7 +22,8 @@ namespace MartialArtist
         SoundEffectInstance HitInstance;
         SoundEffect Health;
         SoundEffectInstance HealthInstance;
-
+        SoundEffect ComboHit;
+        SoundEffectInstance ComboHitInstance;
 
         Effect effect;
         SpriteFont font;
@@ -52,8 +53,8 @@ namespace MartialArtist
             HitInstance = Hit.CreateInstance();
             Health = Content.Load<SoundEffect>("Sounds/UpLevel");
             HealthInstance = Health.CreateInstance();
-
-            
+            ComboHit = Content.Load<SoundEffect>("Sounds/ComboHit");
+            ComboHitInstance = ComboHit.CreateInstance();
             
     
         }
@@ -166,8 +167,15 @@ namespace MartialArtist
                         {
                             Console.WriteLine(liEnemy[i].curHealth);
 
-                            HitInstance.Volume = 0.7f;
-                            HitInstance.Play();
+                            if (Global.allmusic == true)
+                            {
+                                HitInstance.Volume = 0.7f;
+                                HitInstance.Play();
+                            }
+                            else
+                            {
+                                HitInstance.Pause();
+                            }
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
                         }
@@ -195,8 +203,15 @@ namespace MartialArtist
                     {
                         if (timer_enemy > delay_hearth)
                         {
-                            HitInstance.Volume = 0.7f;
-                            HitInstance.Play();
+                            if (Global.allmusic == true)
+                            {
+                                HitInstance.Volume = 0.7f;
+                                HitInstance.Play();
+                            }
+                            else
+                            {
+                                HitInstance.Pause();
+                            }
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
                         }
@@ -225,8 +240,7 @@ namespace MartialArtist
                     {
                         if (timer_enemy > delay_hearth)
                         {
-                            HitInstance.Volume = 0.7f;
-                            HitInstance.Play();
+                            
                             liEnemy[i].curHealth -= player.damge;
                             timer_enemy = 0f;
                         }
@@ -258,6 +272,16 @@ namespace MartialArtist
                         // Mất 30% máu
                         if (timer_enemy > delay_hearth)
                         {
+
+                            if (Global.allmusic == true)
+                            {
+                                ComboHitInstance.Volume = 0.7f;
+                                ComboHitInstance.Play();
+                            }
+                            else
+                            {
+                                ComboHitInstance.Pause();
+                            }
                             liEnemy[i].curHealth -= player.damge + 20;
                             timer_enemy = 0f;
                         }
@@ -410,8 +434,15 @@ namespace MartialArtist
                     //Increase blood of player
                     if (player .curHealth < player.health )
                         player.curHealth += 100;
-                    HealthInstance.Volume = 1f;
-                    HealthInstance.Play();
+                    if (Global.allmusic == true)
+                    {
+                        HealthInstance.Volume = 1f;
+                        HealthInstance.Play();
+                    }
+                    else
+                    {
+                        HealthInstance.Stop();
+                    }
                     //Remove heart after collision
                     LiHearth.RemoveAt(i);
                 }

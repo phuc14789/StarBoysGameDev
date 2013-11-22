@@ -31,7 +31,9 @@ namespace MartialArtist
         int skillCombo;
         public Color[] textureData;
         SoundEffect Swing;
-        SoundEffectInstance SwingInstance;  
+        SoundEffectInstance SwingInstance;
+        SoundEffect Combo;
+        SoundEffectInstance ComboInstance;
         //Varible for control character
         const float gravity = 50f;
         Vector2 velocity;
@@ -85,7 +87,8 @@ namespace MartialArtist
             comboBar = Content.Load<Texture2D>("Images/HealthBar/combo");
             Swing = Content.Load<SoundEffect>("Sounds/SwingE");
             SwingInstance = Swing.CreateInstance();
-            
+            Combo = Content.Load<SoundEffect>("Sounds/Combo");
+            ComboInstance = Combo.CreateInstance();
         }
 
         public override void Update(GameTime gameTime, ContentManager Content)
@@ -168,8 +171,15 @@ namespace MartialArtist
             {
                 if (timer_Skill > 00)
                 {
-                    SwingInstance.Volume = 0.5f;
-                    SwingInstance.Play();
+                    if (Global.allmusic == true)
+                    {
+                        SwingInstance.Volume = 0.5f;
+                        SwingInstance.Play();
+                    }
+                    else
+                    {
+                        SwingInstance.Stop();
+                    }
                     curAction = ActionState.Skill1;
                 }
             }
@@ -204,8 +214,15 @@ namespace MartialArtist
             //SlashUpSkill //SlashUpCombo
             if (key.IsKeyDown(Keys.K))
             {
-                SwingInstance.Volume = 0.5f;
-                SwingInstance.Play();
+                if (Global.allmusic == true)
+                {
+                    SwingInstance.Volume = 0.5f;
+                    SwingInstance.Play();
+                }
+                else
+                {
+                    SwingInstance.Stop();
+                }
                 curAction = ActionState.Skill2;
             }
 
@@ -237,8 +254,15 @@ namespace MartialArtist
             //JumpSlashSkill //JumpSlashCombo
             if (key.IsKeyDown(Keys.L))
             {
-                SwingInstance.Volume = 0.5f;
-                SwingInstance.Play();
+                if (Global.allmusic == true)
+                {
+                    SwingInstance.Volume = 0.5f;
+                    SwingInstance.Play();
+                }
+                else
+                {
+                    SwingInstance.Stop();
+                }
                 curAction = ActionState.Skill3;
             }
 
@@ -270,6 +294,15 @@ namespace MartialArtist
             //Combo1
             if (key.IsKeyDown(Keys.U) && curCombo >= 20)
             {
+                if (Global.allmusic == true)
+                {
+                    ComboInstance.Volume = 0.6f;
+                    ComboInstance.Play();
+                }
+                else
+                {
+                    ComboInstance.Stop();
+                }
                 curAction = ActionState.Combo1;
             }
 

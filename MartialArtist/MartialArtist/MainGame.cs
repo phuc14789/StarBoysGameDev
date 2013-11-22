@@ -83,14 +83,14 @@ namespace MartialArtist
 
                     mainMenu.Update(gameTime, Content);
                     howtoPlay.Update(gameTime, Content);
-                    if (Global.music == true)
+                    if (Global.music == true && Global.allmusic == true)
                     {
                         MenuSongInstance.Volume = 1f;
                         MenuSongInstance.Play();
                     }
                     else
                     {
-                        MenuSongInstance.Stop();
+                        MenuSongInstance.Pause();
                     }
                     ////Change gameState to HowToPlay when button is clicked
                     if (mainMenu.howtoplayButton.isClicked) { currentGameMenu = GameState.HowToPlay; }
@@ -115,8 +115,15 @@ namespace MartialArtist
                 //Playing State
                 case GameState.Playing:
                     MenuSongInstance.Stop();
-                    MainSongInstance.Volume = 0.7f;
-                    MainSongInstance.Play();
+                    if (Global.allmusic == true)
+                    {
+                        MainSongInstance.Volume = 0.7f;
+                        MainSongInstance.Play();
+                    }
+                    else
+                    {
+                        MainSongInstance.Pause();
+                    }
                     if (!levelManager.GameOver)
                         levelManager.Update(gameTime);
                     else
