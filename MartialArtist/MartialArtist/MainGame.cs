@@ -18,6 +18,7 @@ namespace MartialArtist
         MainMenu mainMenu;
         LevelManager levelManager;
         HowToPlay howtoPlay;
+        About about;
         //Begin gameState, begin with Main Menu
         GameState currentGameMenu = GameState.MainMenu;
         SoundEffect MenuSong;
@@ -56,6 +57,8 @@ namespace MartialArtist
             mainMenu = new MainMenu();
             howtoPlay = new HowToPlay();
             howtoPlay.LoadContent(Content);
+            about = new About();
+            about.LoadContent(Content);
             levelManager = new LevelManager(this, Content);
             base.Initialize();
         }
@@ -83,6 +86,7 @@ namespace MartialArtist
 
                     mainMenu.Update(gameTime, Content);
                     howtoPlay.Update(gameTime, Content);
+                    about.Update(gameTime, Content);
                     if (Global.music == true && Global.allmusic == true)
                     {
                         MenuSongInstance.Volume = 1f;
@@ -107,6 +111,15 @@ namespace MartialArtist
                 case GameState.HowToPlay:
                     howtoPlay.Update(gameTime, Content);
                     if (howtoPlay.backButton.isClicked)
+                    {
+                        currentGameMenu = GameState.MainMenu;
+                    }
+                    break;
+
+                //About State
+                case GameState.About:
+                    about.Update(gameTime, Content);
+                    if (about.backButton.isClicked)
                     {
                         currentGameMenu = GameState.MainMenu;
                     }
@@ -153,6 +166,12 @@ namespace MartialArtist
                 case GameState.HowToPlay:
                     //Draw Main Menu
                     howtoPlay.Draw(spriteBatch);
+                    break;
+
+                //About State
+                case GameState.About:
+                    //Draw Main Menu
+                    about.Draw(spriteBatch);
                     break;
 
                 //Playing State

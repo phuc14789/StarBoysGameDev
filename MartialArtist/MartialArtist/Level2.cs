@@ -40,7 +40,7 @@ namespace MartialArtist
             LiHearth = new List<Effect>();
             
 
-            background = Content.Load<Texture2D>("Images/Background/Level1/Level1");
+            background = Content.Load<Texture2D>("Images/Background/Level2/Level2");
             healthTexture = Content.Load<Texture2D>("Images/HealthBar/Healthbar");
 
             effect = new Effect(Content.Load<Texture2D>("Images/Effect/Effect_01") , Vector2.Zero, 0, 1, 4, 100, 1.2f);

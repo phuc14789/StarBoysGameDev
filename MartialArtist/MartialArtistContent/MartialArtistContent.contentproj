@@ -279,16 +279,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Enemy\Boss\Boss_hack_01 .png">
-      <Name>Boss_hack_01</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Images\Enemy\Boss\Boss_hack_02 .png">
-      <Name>Boss_hack_02</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Images\Enemy\Boss\Boss_walk .png">
       <Name>Boss_walk</Name>
       <Importer>TextureImporter</Importer>
@@ -427,6 +417,18 @@
   <ItemGroup>
     <Compile Include="Images\Background\About_menu.png">
       <Name>About_menu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Enemy\Boss\Boss_hack_01.png">
+      <Name>Boss_hack_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Images\Enemy\Boss\Boss_hack_02.png">
+      <Name>Boss_hack_02</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

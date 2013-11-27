@@ -15,9 +15,6 @@ namespace MartialArtist
     public class Boss:Animation
     {
 
-        // Sức mạnh của Enemy                          
-        private int _i_Damage;
-
         // Máu của Enemy
         private int _i_Health;
 

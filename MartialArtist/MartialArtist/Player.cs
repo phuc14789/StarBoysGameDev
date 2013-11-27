@@ -471,7 +471,7 @@ namespace MartialArtist
         {
             _t_Image = Content.Load<Texture2D>("Images/Player/Player_JumpSlashDown_p1");
             _i_Rows = 1;
-            _i_Columns = 5;
+            _i_Columns = 3;
             _f_delay = 80f;
             calculateFrame();
         }
