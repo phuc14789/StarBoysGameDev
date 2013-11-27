@@ -28,7 +28,7 @@ namespace MartialArtist
         Effect effect;
         SpriteFont font;
         List<Effect> LiHearth;
-
+        List<Effect> LiMana;
 
         public Level1(Game g, ContentManager Content)
         {
@@ -36,12 +36,10 @@ namespace MartialArtist
             player = new Player(Content.Load<Texture2D>("Images/Player/Player_Standing"),g.Content , new Vector2(0, 0), 1000, 50 , 100, 0, 2, 4, 50f, 0.7f);
             font = g.Content.Load<SpriteFont>("Fonts/Arial");
 
-
-
             // Khởi tạo list Enemy
             liEnemy = new List<Enemy>();
             LiHearth = new List<Effect>();
-            
+            LiMana = new List<Effect>();
 
             background = Content.Load<Texture2D>("Images/Background/Level1/Level1");
             healthTexture = Content.Load<Texture2D>("Images/HealthBar/Healthbar");
@@ -54,8 +52,7 @@ namespace MartialArtist
             Health = Content.Load<SoundEffect>("Sounds/UpLevel");
             HealthInstance = Health.CreateInstance();
             ComboHit = Content.Load<SoundEffect>("Sounds/ComboHit");
-            ComboHitInstance = ComboHit.CreateInstance();
-            
+            ComboHitInstance = ComboHit.CreateInstance();            
     
         }
 
@@ -80,8 +77,7 @@ namespace MartialArtist
         public override void Update(GameTime gameTime)
         {
 
-            player.damge = 50;
-            
+            player.damge = 50;            
 
             camera.Update(gameTime, player);
             player.Update(gameTime, g.Content);
@@ -89,8 +85,7 @@ namespace MartialArtist
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             timer_hearth +=(float)gameTime.ElapsedGameTime.TotalMilliseconds;
             
-            timerString += (float)gameTime.ElapsedGameTime.Milliseconds;
-            
+            timerString += (float)gameTime.ElapsedGameTime.Milliseconds;            
 
 
             // Thêm Enemy với số lượng nhỏ hơn 10
@@ -142,14 +137,10 @@ namespace MartialArtist
 
         }
 
-
-
         public void f_CollisionPlayer_Enemy(GameTime gameTime)
         {
 
-            player.flagCollection = false;
-
-           
+            player.flagCollection = false;           
 
             // Duyệt qua tất cả các Enemy
             for (int i = 0; i < liEnemy.Count; i++)
@@ -158,8 +149,7 @@ namespace MartialArtist
                 // Sử dụng Skill thường loại 1
                 if (player.curAction == ActionState.Skill1)
                 {
-                    timer_enemy += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    
+                    timer_enemy += (float)gameTime.ElapsedGameTime.TotalMilliseconds;                    
 
                     if (  player.f_Rectangle_dest(position).Intersects(liEnemy[i].f_Rectangle_dest(liEnemy[i].Vt2_PositionEnemy)))
                     {
@@ -192,7 +182,6 @@ namespace MartialArtist
                        
                     }
                 }
-
 
                 // Sử dụng Skill thường loại 2
                 if (player.curAction == ActionState.Skill2)
@@ -391,20 +380,23 @@ namespace MartialArtist
                     // Thực hiện animation
 
 
-                    //Xóa Enemy ra khỏi List khi frame của Enemy >= tổng frame - 1
-                    
+                    //Xóa Enemy ra khỏi List khi frame của Enemy >= tổng frame - 1                    
 
                     if (timer >= 3000)
                     {
                         if (liEnemy[i]._i_currentFrame >= liEnemy[i]._i_totalFrame - 1)
                         {
-
                             Random rd = new Random();
                             int Number = rd.Next(0, 101);
-
+                            int manaNum = rd.Next(0, 101);
                             //Add heart
                             if (f_Check_Hearth(Number))
-                                LiHearth.Add(new Effect(g.Content.Load<Texture2D>("Images/Effect/hearth"), new Vector2(liEnemy[i].Vt2_PositionEnemy.X + 110, liEnemy[i].Vt2_PositionEnemy.Y + 110), 0, 1, 1, 100, 1f));
+                                LiHearth.Add(new Effect(g.Content.Load<Texture2D>("Images/Effect/hearth"), new Vector2(liEnemy[i].Vt2_PositionEnemy.X + 110, liEnemy[i].Vt2_PositionEnemy.Y + 100), 0, 1, 1, 100, 1f));
+
+                            //Add Mana
+                            if (f_Check_Hearth (manaNum))
+                                LiMana.Add(new Effect(g.Content.Load<Texture2D>("Images/HealthBar/mana"), new Vector2(liEnemy[i].Vt2_PositionEnemy.X + 110, liEnemy[i].Vt2_PositionEnemy.Y + 70), 0, 1, 5, 100, 0.2f));
+
 
                             liEnemy.RemoveAt(i);
 
@@ -415,13 +407,7 @@ namespace MartialArtist
                         }
                         timer = 0f;
                     }
-
-
-
-
                 }
-
-
             }
 
             
@@ -445,8 +431,7 @@ namespace MartialArtist
                     }
                     //Remove heart after collision
                     LiHearth.RemoveAt(i);
-                }
-
+                }               
 
                 // Thời giam máu 5s nếu ko lượm tự động biến mất    
                 timer += (float)gameTime.ElapsedGameTime.Milliseconds;
@@ -455,10 +440,41 @@ namespace MartialArtist
                     LiHearth.RemoveAt(i);
                     timer = 0;
                 }
-
             }
-        }
 
+            for (int t = 0; t < LiMana.Count; t++)
+            {
+                Rectangle dectMana = new Rectangle((int)LiMana[t]._vt2_position.X, (int)LiMana[t]._vt2_position.Y, 40, 40);
+
+                if (player.f_Rectangle_dest(position).Intersects(dectMana))
+                {
+                    //Increase Mana of player
+                    if (player.curCombo < player.combo)
+                        player.curCombo += 70;
+                    if (Global.allmusic == true)
+                    {
+                        HealthInstance.Volume = 1f;
+                        HealthInstance.Play();
+                    }
+                    else
+                    {
+                        HealthInstance.Stop();
+                    }
+
+                    //Remove heart after collision
+                    LiMana.RemoveAt(t);
+                }
+
+                // Thời giam máu 5s nếu ko lượm tự động biến mất    
+                timer += (float)gameTime.ElapsedGameTime.Milliseconds;
+                if (timer >= 5000)
+                {
+                    LiMana.RemoveAt(t);
+                    timer = 0;
+                }
+            }
+
+        }
 
         public bool f_Check_Hearth(int Number)
         {
@@ -467,14 +483,9 @@ namespace MartialArtist
             return false;
         }
 
-
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);
-
-            
-
-
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);         
 
             //Draw background Level1
             spriteBatch.Draw(background, new Vector2 (0,-50), new Rectangle(0, 0, 3000, 720), Color.White, 0, Vector2.Zero, 0.83f, SpriteEffects.None, 0f);
@@ -490,8 +501,6 @@ namespace MartialArtist
 
             //Draw player
             player.Draw(spriteBatch);
-
-
          
             // draw effect
             if (player.flagCollection == true)
@@ -506,21 +515,24 @@ namespace MartialArtist
                 }
             }
 
-            
+            // draw Mana
+            if (LiMana.Count > 0)
+            {
+                foreach (Effect f in LiMana)
+                {
+                    f.Draw(spriteBatch);
+                }
+            }         
 
             // draw start level1
             if (timerString < delay)
                 spriteBatch.DrawString(font, "LEVEL1  BEGIN", new Vector2(camera.centre.X + 350, camera.centre.Y + 200), Color.White);
            
             // draw score
-            spriteBatch.DrawString(font, Global.score.ToString(), new Vector2(camera.centre.X + 850, camera.centre.Y + 27), Color.White);
+            spriteBatch.DrawString(font, "Score: " + Global.score.ToString(), new Vector2(camera.centre.X + 750, camera.centre.Y + 27), Color.White);
     
             spriteBatch.End();
 
         }
-
-
-
-
     }
 }

@@ -218,11 +218,11 @@ namespace MartialArtist
 
             // draw start level1
             if (timerString < delay)
-                spriteBatch.DrawString(font, "FINAL  ROUND", new Vector2(camera.centre.X + 350, camera.centre.Y + 200), Color.White);
+                spriteBatch.DrawString(font, "FINAL ROUND", new Vector2(camera.centre.X + 350, camera.centre.Y + 200), Color.White);
 
 
             // draw score
-            spriteBatch.DrawString(font, Global.score.ToString(), new Vector2(camera.centre.X + 850, camera.centre.Y + 27), Color.White);
+            spriteBatch.DrawString(font, "Score: " + Global.score.ToString(), new Vector2(camera.centre.X + 750, camera.centre.Y + 27), Color.White);
     
 
             spriteBatch.End();

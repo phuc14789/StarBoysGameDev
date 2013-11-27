@@ -27,7 +27,7 @@ namespace MartialArtist
         Effect effect;
 
         List<Effect> LiHearth;
-
+        List<Effect> LiMana;
 
         public Level2(Game g, ContentManager Content)
         {
@@ -38,7 +38,7 @@ namespace MartialArtist
             // Khởi tạo list Enemy
             liEnemy = new List<Enemy>();
             LiHearth = new List<Effect>();
-            
+            LiMana = new List<Effect>();
 
             background = Content.Load<Texture2D>("Images/Background/Level2/Level2");
             healthTexture = Content.Load<Texture2D>("Images/HealthBar/Healthbar");
@@ -374,12 +374,40 @@ namespace MartialArtist
                         }
                         timer = 0f;
                     }
-
-
-
-
                 }
 
+                for (int t = 0; t < LiMana.Count; t++)
+                {
+                    Rectangle dectMana = new Rectangle((int)LiMana[t]._vt2_position.X, (int)LiMana[t]._vt2_position.Y, 40, 40);
+
+                    if (player.f_Rectangle_dest(position).Intersects(dectMana))
+                    {
+                        //Increase Mana of player
+                        if (player.curCombo < player.combo)
+                            player.curCombo += 70;
+                        if (Global.allmusic == true)
+                        {
+                            HealthInstance.Volume = 1f;
+                            HealthInstance.Play();
+                        }
+                        else
+                        {
+                            HealthInstance.Stop();
+                        }
+
+                        //Remove heart after collision
+                        LiMana.RemoveAt(t);
+                    }
+
+                    // Thời giam máu 5s nếu ko lượm tự động biến mất    
+                    timer += (float)gameTime.ElapsedGameTime.Milliseconds;
+                    if (timer >= 5000)
+                    {
+                        LiMana.RemoveAt(t);
+                        timer = 0;
+                    }
+
+                }
 
             }
 
@@ -417,15 +445,7 @@ namespace MartialArtist
             if ((0 <= Number && Number <= 15) || (50 <= Number && Number <= 65) || (85 <= Number && Number <= 100))
                 return true;
             return false;
-        }
-
-
-
-
-        
-
-
-            
+        }           
       
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -447,11 +467,11 @@ namespace MartialArtist
             //Draw player
             player.Draw(spriteBatch);
 
-
          
             if (player.flagCollection == true)
                 effect.Draw(spriteBatch);
 
+            //Draw Hearth
             if (LiHearth.Count > 0)
             {
                 foreach (Effect e in LiHearth)
@@ -460,13 +480,22 @@ namespace MartialArtist
                 }
             }
 
+            // draw Mana
+            if (LiMana.Count > 0)
+            {
+                foreach (Effect f in LiMana)
+                {
+                    f.Draw(spriteBatch);
+                }
+            }         
+
             // draw start level1
             if (timerString < delay)
                 spriteBatch.DrawString(font, "LEVEL2  BEGIN", new Vector2(camera.centre.X + 350, camera.centre.Y + 200), Color.White);
 
 
             // draw score
-            spriteBatch.DrawString(font, Global.score.ToString(), new Vector2(camera.centre.X + 850, camera.centre.Y + 27), Color.White);
+            spriteBatch.DrawString(font, "Score: " + Global.score.ToString(), new Vector2(camera.centre.X + 750, camera.centre.Y + 27), Color.White);
     
            
             spriteBatch.End();

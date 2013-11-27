@@ -13,7 +13,6 @@ namespace MartialArtist
 {
     class Effect:Animation
     {
-
         public Effect(Texture2D texture, Vector2 position, int currentFrame, int rows, int columns, float delay, float scale)
             : base(texture, position, currentFrame, rows, columns, delay, scale) { }
 
